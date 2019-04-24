@@ -1,6 +1,6 @@
 import '../styles/index.css'
 import { AgGridReact } from 'ag-grid-react';
-import { Component, useState, useEffect } from 'react';
+import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi } from 'ag-grid-community';
@@ -16,24 +16,13 @@ export interface GridProps {
 }
 
 class Grid extends Component<GridProps, {rowData: RowData[]}> {
-    colDefs: ColDef[] = [{
-        field: "ticker"
-    }, {
-        field: "bid"
-    }, {
-        field: "ask"
-    }, {
-        field: "mid"
-    }];
+    colDefs: ColDef[] = [];
 
     constructor(props: GridProps) {
         super(props);
         this.state = { rowData: props.rowData };
 
         this.colDefs = this.getColDefs(props);
-//        this.colDefs = Object.keys(props.rowData[0]).map(k => {return {field: k}});
-
-//        console.log(Object.keys(props.rowData[0]));
     }
 
     // find the name of all columns to be displayed, either b/c it's in the data or the formula
@@ -59,7 +48,7 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
         this.gridApi = params.api;
         this.columnApi = params.columnApi;
     }
-    
+
     evaluate() {
         if (this.props.formula) {
             this.setState({rowData: transform(this.state.rowData, this.props.formula)});
