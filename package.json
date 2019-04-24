@@ -1,0 +1,40 @@
+{
+  "name": "etl-sheets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "build-start": "next build && next start",
+    "start": "next start",
+    "export": "next build && next export"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-typescript": "^1.1.1",
+    "ag-grid-community": "^20.2.0",
+    "ag-grid-react": "^20.2.0",
+    "es6-promise": "^4.2.6",
+    "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.24.0",
+    "next": "^8.0.3",
+    "react": "^16.8.3",
+    "react-autocomplete": "^1.8.1",
+    "react-dom": "^16.8.3",
+    "react-markdown": "^4.0.6"
+  },
+  "devDependencies": {
+    "@types/isomorphic-fetch": "0.0.35",
+    "@types/moment": "^2.13.0",
+    "@types/next": "^8.0.1",
+    "@types/react": "^16.8.6",
+    "autoprefixer": "^9.4.9",
+    "cssnano": "^4.1.10",
+    "postcss-easy-import": "^3.0.0",
+    "tailwindcss": "^0.7.4"
+  }
+}
