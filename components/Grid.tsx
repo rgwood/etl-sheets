@@ -8,6 +8,7 @@ import {Formula} from '../models/formula';
 import {RowData} from '../models/rowdata';
 import {transform} from '../services/transformer.service';
 import uniq from 'lodash/uniq';
+import CustomHeader from './CustomHeader';
 
 export interface GridProps {
     title: string;
@@ -26,7 +27,7 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
     }
 
     // find the name of all columns to be displayed, either b/c it's in the data or the formula
-    getColDefs(props: GridProps) {
+    getColDefs(props: GridProps): ColDef[] {
         //slow+ugly. TODO: find a more declarative way of doing this
         var colNames: string[] = [];
 
@@ -38,7 +39,14 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
             colNames = colNames.concat(props.formula.field);
         }
 
-        return uniq(colNames).map(cn => {return {field: cn}});
+        let columnNameToColDef = (name: string) => {
+            
+            if(props.formula && name.toLowerCase() === props.formula.field.toLowerCase()) {
+                return {field: name, cellClass:'text-green-dark', headerComponentFramework: CustomHeader, headerComponentParams: {formulaExpression: props.formula.expression}}
+            }
+            return {field: name, headerComponentFramework: CustomHeader,}};
+    
+        return uniq(colNames).map(cn => columnNameToColDef(cn));
     }
 
     gridApi!: GridApi;
@@ -56,14 +64,14 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
         }
     }
 
-    gridOptions: GridOptions = { domLayout: 'autoHeight' };
+    gridOptions: GridOptions = { domLayout: 'autoHeight', headerHeight: this.props.formula ? 64 : 32 };
 
     render() {
         return <div>
             <div className="my-2 mr-2 text-lg text-blue">{this.props.title}
             {/* {this.props.formula ? <button className="bg-blue-dark text-sm text-white rounded py-2 px-4 ml-2 my-2" onClick={this.evaluate.bind(this)}>Evaluate</button> : ''} */}
             </div>
-            <div>{this.props.formula ? <span>{this.props.formula.field} = {this.props.formula.expression}</span>: ''}</div>
+            {/* <div>{this.props.formula ? <span>{this.props.formula.field} = {this.props.formula.expression}</span>: ''}</div> */}
             <div className="ag-theme-balham" >
                 <AgGridReact columnDefs={this.colDefs} rowData={this.state.rowData} gridOptions={this.gridOptions}
                     onGridReady={this.onGridReady.bind(this)} />

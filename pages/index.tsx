@@ -21,7 +21,7 @@ export default () => {
 
     <Grid title="Initial Data" rowData={initialData} />
 
-    {transformedWork.map((tw, index) => <Grid title={`Transformation ${index+1}`} rowData={tw.transformedData} formula={tw.formula}/>)}
+    {transformedWork.map((tw, index) => <Grid key={index} title={`Transformation ${index+1}`} rowData={tw.transformedData} formula={tw.formula}/>)}
 
     {/* {formulae.map((f, index) => <Grid title={`Transformation ${index+1}`} rowData={initialData} formula={f}/>)} */}
   </Layout>
