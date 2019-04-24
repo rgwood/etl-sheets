@@ -1,24 +1,16 @@
 import '../styles/index.css'
 import Layout from '../components/Layout'
-import RecentArticles from '../components/RecentArticles';
 import Grid  from '../components/Grid';
 import Clock from '../components/Clock';
 import { Formula } from '../models/formula';
+import {getInitialData, getTransformationFormulae} from '../services/data.service';
+import {transformMultipleAndShowWork} from '../services/transformer.service'
 
 export default () => {
 
-  var range: number[] = [];
-  range.push(1);
-  range.push(2);
-  range.push(3);
-
-  let initialData = [{
-    ticker: "AAPL", bid: 3400, ask: 3500
-}, {
-    ticker: "GOOG", bid: 310, ask: 320
-}, {
-    ticker: "MSFT", bid: 700, ask: 720
-}];
+  let initialData = getInitialData(1);
+  let formulae = getTransformationFormulae(1);
+  let transformedWork = transformMultipleAndShowWork(initialData, formulae);
 
   return <Layout title="ETLSheets">
     <p>Test test test...</p>
@@ -26,17 +18,11 @@ export default () => {
     <div className="mt-4">
       <Clock />
     </div>
-{/* 
-    {range.map(i => <Grid key={i} title={`Initial Data ${i}`} rowData={[{
-            ticker: "AAPL", bid: 3400, ask: 3500
-        }, {
-            ticker: "GOOG", bid: 310, ask: 320
-        }, {
-            ticker: "MSFT", bid: 700, ask: 720
-        }]} />)} */}
 
     <Grid title="Initial Data" rowData={initialData} />
-        
-    <Grid title="Transformation 1 " rowData={initialData} formula={new Formula('mid','($bid + $ask) / 2')} />
+
+    {transformedWork.map((tw, index) => <Grid title={`Transformation ${index+1}`} rowData={tw.transformedData} formula={tw.formula}/>)}
+
+    {/* {formulae.map((f, index) => <Grid title={`Transformation ${index+1}`} rowData={initialData} formula={f}/>)} */}
   </Layout>
 }

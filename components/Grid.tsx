@@ -47,6 +47,7 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
     onGridReady(params: GridReadyEvent) {
         this.gridApi = params.api;
         this.columnApi = params.columnApi;
+        this.gridApi.sizeColumnsToFit();
     }
 
     evaluate() {
@@ -60,7 +61,7 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
     render() {
         return <div>
             <div className="my-2 mr-2 text-lg text-blue">{this.props.title}
-            {this.props.formula ? <button className="bg-blue-dark text-sm text-white rounded py-2 px-4 ml-2 my-2" onClick={this.evaluate.bind(this)}>Evaluate</button> : ''}
+            {/* {this.props.formula ? <button className="bg-blue-dark text-sm text-white rounded py-2 px-4 ml-2 my-2" onClick={this.evaluate.bind(this)}>Evaluate</button> : ''} */}
             </div>
             <div>{this.props.formula ? <span>{this.props.formula.field} = {this.props.formula.expression}</span>: ''}</div>
             <div className="ag-theme-balham" >
