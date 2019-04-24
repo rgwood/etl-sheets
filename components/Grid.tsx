@@ -1,143 +1,85 @@
 import '../styles/index.css'
 import { AgGridReact } from 'ag-grid-react';
- import { Component, useState, useEffect } from 'react';
+import { Component, useState, useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { GridOptions, GridReadyEvent, GridApi, ColumnApi } from 'ag-grid-community';
+import { ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi } from 'ag-grid-community';
+import {Formula} from '../models/formula';
+import {RowData} from '../models/rowdata';
+import {transform} from '../services/transformer.service';
+import uniq from 'lodash/uniq';
 
-declare interface RowData {
-    ticker: string;
-    bid: number;
-    [x: string]: any;
+export interface GridProps {
+    title: string;
+    rowData: RowData[];
+    formula?: Formula;
 }
 
-class Grid extends Component {
-    constructor(props: any) {
+class Grid extends Component<GridProps, {rowData: RowData[]}> {
+    colDefs: ColDef[] = [{
+        field: "ticker"
+    }, {
+        field: "bid"
+    }, {
+        field: "ask"
+    }, {
+        field: "mid"
+    }];
+
+    constructor(props: GridProps) {
         super(props);
-        this.state = {    rowData: [{
-            ticker: "AAPL", bid: 3400, ask: 3500
-        }, {
-            ticker: "GOOG", bid: 310, ask: 320
-        }, {
-            ticker: "MSFT", bid: 700, ask: 720
-        }]};
+        this.state = { rowData: props.rowData };
+
+        this.colDefs = this.getColDefs(props);
+//        this.colDefs = Object.keys(props.rowData[0]).map(k => {return {field: k}});
+
+//        console.log(Object.keys(props.rowData[0]));
     }
 
-    api!: GridApi;
+    // find the name of all columns to be displayed, either b/c it's in the data or the formula
+    getColDefs(props: GridProps) {
+        //slow+ugly. TODO: find a more declarative way of doing this
+        var colNames: string[] = [];
+
+        props.rowData.forEach(rd => {
+            colNames = colNames.concat(Object.keys(rd));
+        });
+
+        if (props.formula) {
+            colNames = colNames.concat(props.formula.field);
+        }
+
+        return uniq(colNames).map(cn => {return {field: cn}});
+    }
+
+    gridApi!: GridApi;
     columnApi!: ColumnApi;
 
     onGridReady(params: GridReadyEvent) {
-        console.log('on grid ready');
-        this.api = params.api;
+        this.gridApi = params.api;
         this.columnApi = params.columnApi;
     }
-
-    colDefs = [{
-        headerName: "Ticker", field: "ticker"
-    }, {
-        headerName: "Bid Price", field: "bid"
-    }, {
-        headerName: "Ask Price", field: "ask"
-    }, {
-        headerName: "Mid Price", field: "mid"
-    }];
-
-    rowData: RowData[] = [{
-        ticker: "AAPL", bid: 3400, ask: 3500
-    }, {
-        ticker: "GOOG", bid: 310, ask: 320
-    }, {
-        ticker: "MSFT", bid: 700, ask: 720
-    }];
-
-    convertFormulaToJsFunction(formula: string) { 
-        return `return ${formula.replace(/\$/g, 'row.')}` 
-    }
-
-    formulae = [{ field: "mid", formula: "($bid + $ask) / 2" }];
-
-    formulaeWithDynamicFunction() {
-        return this.formulae.map(f => {
-            return { field: f.field, formula: f.formula, dynamicFunction: Function('row', this.convertFormulaToJsFunction(f.formula)) };
-        });
-    }
-
+    
     evaluate() {
-        console.log(this.state);
-        this.state.rowData.forEach(row => {
-            this.formulaeWithDynamicFunction().forEach(f => {
-                row[f.field] = f.dynamicFunction(row);
-            });
-        });
-        this.api.refreshCells();
+        if (this.props.formula) {
+            this.setState({rowData: transform(this.state.rowData, this.props.formula)});
+        }
     }
 
-    gridOptions: GridOptions = { gridAutoHeight: true };
+    gridOptions: GridOptions = { domLayout: 'autoHeight' };
 
     render() {
         return <div>
-        <button className="bg-blue-dark text-sm text-white rounded py-2 px-4 my-2" onClick={this.evaluate.bind(this)}>Evaluate</button>
-        <div className="ag-theme-balham" >
-            <AgGridReact columnDefs={this.colDefs} rowData={this.state.rowData} gridOptions={this.gridOptions} 
-            onGridReady={this.onGridReady.bind(this)}/>
+            <div className="my-2 mr-2 text-lg text-blue">{this.props.title}
+            {this.props.formula ? <button className="bg-blue-dark text-sm text-white rounded py-2 px-4 ml-2 my-2" onClick={this.evaluate.bind(this)}>Evaluate</button> : ''}
+            </div>
+            <div>{this.props.formula ? <span>{this.props.formula.field} = {this.props.formula.expression}</span>: ''}</div>
+            <div className="ag-theme-balham" >
+                <AgGridReact columnDefs={this.colDefs} rowData={this.state.rowData} gridOptions={this.gridOptions}
+                    onGridReady={this.onGridReady.bind(this)} />
+            </div>
         </div>
-    </div>
     }
 }
-
-// function Grid() {
-//     const [colDefs, setColDefs] = useState([{
-//         headerName: "Ticker", field: "ticker"
-//     }, {
-//         headerName: "Bid Price", field: "bid"
-//     }, {
-//         headerName: "Ask Price", field: "ask"
-//     }, {
-//         headerName: "Mid Price", field: "mid"
-//     }]);
-
-//     var initialRowData: RowData[] = [{
-//         ticker: "AAPL", bid: 3400, ask: 3500
-//     }, {
-//         ticker: "GOOG", bid: 310, ask: 320
-//     }, {
-//         ticker: "MSFT", bid: 700, ask: 720
-//     }];
-
-//     var formulae = [{ field: "mid", formula: "($bid + $ask) / 2" }];
-
-//     const convertFormulaToJsFunction = (formula: string) => `return ${formula.replace(/\$/g, 'row.')}`;
-
-//     var formulaeWithDynamicFunction = formulae.map(f => {
-//         return { field: f.field, formula: f.formula, dynamicFunction: Function('row', convertFormulaToJsFunction(f.formula)) };
-//     });
-
-//     // initialRowData.forEach(row => {
-//     //     formulaeWithDynamicFunction.forEach(f => {
-//     //         row[f.field] = f.dynamicFunction(row);
-//     //     });
-//     // });
-
-//     const [rowData, setRowData] = useState(initialRowData);
-
-//     const evaluate = () => {
-//         console.log('click');
-//         rowData.forEach(row => {
-//             formulaeWithDynamicFunction.forEach(f => {
-//                 row[f.field] = f.dynamicFunction(row);
-//             });
-//         });
-//         setRowData(rowData);
-//     };
-
-//     const gridOptions: GridOptions = { gridAutoHeight: true };
-
-//     return <div>
-//         <button onClick={evaluate}>Evaluate</button>
-//         <div className="ag-theme-balham" >
-//             <AgGridReact columnDefs={colDefs} rowData={rowData} gridOptions={gridOptions} />
-//         </div>
-//     </div>
-// }
 
 export default Grid
