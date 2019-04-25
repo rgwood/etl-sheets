@@ -5,7 +5,12 @@ export function transform(data: RowData[], formula: Formula): RowData[] {
     let cloned = clone(data);
 
     cloned.forEach(row => {
-        row[formula.field] = formula.expressionToFunction()(row);
+        try {
+            row[formula.field] = formula.expressionToFunction()(row);   
+        } catch (error) {
+            console.error({error});
+            row[formula.field] = NaN;
+        }
     });
 
     return cloned;
