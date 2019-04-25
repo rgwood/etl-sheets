@@ -1,6 +1,8 @@
 import {Formula} from '../models/formula';
 import {RowData} from '../models/rowdata';
 
+// TODO: this is insanely inefficient and it will catch up with me someday. Spend some time thinking about copies+efficiency
+
 export function transform(data: RowData[], formula: Formula): RowData[] {
     let cloned = clone(data);
 
@@ -24,7 +26,7 @@ function clone(data: RowData[]): RowData[] {
 
 export function transformMultipleAndShowWork(initialData: RowData[], formulae: Formula[]): {formula: Formula, transformedData: RowData[]}[] {
     let results: {formula: Formula, transformedData: RowData[]}[] = [];
-    let currentData = clone(initialData);
+    let currentData = initialData;
     formulae.forEach(f => {
         let transformed = transform(currentData, f);
         results.push({formula: f, transformedData: transformed});

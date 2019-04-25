@@ -40,7 +40,6 @@ export default class Index extends Component<{}, IndexState> {
     this.setState({initialData: initialData, formulae: formulae, transformedWork: transformedWork });
    }
 
-
   render() {
     return <Layout title="ETLSheets">
       <p>Test test test...</p>
