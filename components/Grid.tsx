@@ -6,7 +6,6 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi } from 'ag-grid-community';
 import {Formula} from '../models/formula';
 import {RowData} from '../models/rowdata';
-import {transform} from '../services/transformer.service';
 import uniq from 'lodash/uniq';
 import CustomHeader from './CustomHeader';
 
@@ -17,13 +16,11 @@ export interface GridProps {
     onFormulaExpressionChanged?: Function
 }
 
-class Grid extends Component<GridProps, {rowData: RowData[]}> {
+class Grid extends Component<GridProps> {
     colDefs: ColDef[] = [];
 
     constructor(props: GridProps) {
         super(props);
-        this.state = { rowData: props.rowData };
-
         this.colDefs = this.getColDefs(props);
     }
 
@@ -60,12 +57,6 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
         this.gridApi.sizeColumnsToFit();
     }
 
-    evaluate() {
-        if (this.props.formula) {
-            this.setState({rowData: transform(this.state.rowData, this.props.formula)});
-        }
-    }
-
     gridOptions: GridOptions = { domLayout: 'autoHeight', headerHeight: this.props.formula ? 64 : 32 };
 
     render() {
@@ -75,7 +66,7 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
             </div>
             {/* <div>{this.props.formula ? <span>{this.props.formula.field} = {this.props.formula.expression}</span>: ''}</div> */}
             <div className="ag-theme-balham" >
-                <AgGridReact columnDefs={this.colDefs} rowData={this.state.rowData} gridOptions={this.gridOptions}
+                <AgGridReact columnDefs={this.colDefs} rowData={this.props.rowData} gridOptions={this.gridOptions}
                     onGridReady={this.onGridReady.bind(this)} />
             </div>
         </div>
