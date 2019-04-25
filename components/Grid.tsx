@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi } from 'ag-grid-community';
+import { ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams } from 'ag-grid-community';
 import {Formula} from '../models/formula';
 import {RowData} from '../models/rowdata';
 import uniq from 'lodash/uniq';
@@ -40,7 +40,8 @@ class Grid extends Component<GridProps> {
         let columnNameToColDef = (name: string) => {
             
             if(props.formula && props.onFormulaExpressionChanged && name.toLowerCase() === props.formula.field.toLowerCase()) {
-                return {field: name, cellClass:'text-green-dark', headerComponentFramework: CustomHeader, 
+                return {field: name, cellClass: (params: CellClassParams) =>  isNaN(params.value) ? 'text-red' : 'text-green-dark', 
+                headerComponentFramework: CustomHeader, 
                 headerComponentParams: {formulaExpression: props.formula.expression, onFormulaExpressionChanged: this.props.onFormulaExpressionChanged}}
             }
             return {field: name, headerComponentFramework: CustomHeader,}};
