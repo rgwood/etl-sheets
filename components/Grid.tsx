@@ -14,6 +14,7 @@ export interface GridProps {
     title: string;
     rowData: RowData[];
     formula?: Formula;
+    onFormulaExpressionChanged?: Function
 }
 
 class Grid extends Component<GridProps, {rowData: RowData[]}> {
@@ -41,8 +42,9 @@ class Grid extends Component<GridProps, {rowData: RowData[]}> {
 
         let columnNameToColDef = (name: string) => {
             
-            if(props.formula && name.toLowerCase() === props.formula.field.toLowerCase()) {
-                return {field: name, cellClass:'text-green-dark', headerComponentFramework: CustomHeader, headerComponentParams: {formulaExpression: props.formula.expression}}
+            if(props.formula && props.onFormulaExpressionChanged && name.toLowerCase() === props.formula.field.toLowerCase()) {
+                return {field: name, cellClass:'text-green-dark', headerComponentFramework: CustomHeader, 
+                headerComponentParams: {formulaExpression: props.formula.expression, onFormulaExpressionChanged: this.props.onFormulaExpressionChanged}}
             }
             return {field: name, headerComponentFramework: CustomHeader,}};
     
