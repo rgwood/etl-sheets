@@ -35,3 +35,15 @@ Class which performs one-to-one operations on each row, and returns the same num
 Can I start small? Single formula/transformation per step, keep it simple.
 
 TransformerService class takes in a formula, applies it to RowData[], gives result.
+
+
+
+Transformation types:
+
+transform(row): row | row[] | undefined
+row is 1 to 1
+row[] is 1 to many
+undefined is 1 to 0 (a filter)
+
+column formulae are a special case that can be aggregated and converted to a regular 1-to-1 transformation
+how to handle these visually?

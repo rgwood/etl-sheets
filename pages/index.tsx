@@ -1,7 +1,7 @@
 import '../styles/index.css'
 import Layout from '../components/Layout'
 import { Component } from 'react';
-import Grid from '../components/Grid';
+import GridComponent from '../components/GridComponent';
 import Clock from '../components/Clock';
 import { Formula } from '../models/formula';
 import { getInitialData, getTransformationFormulae } from '../services/data.service';
@@ -48,9 +48,9 @@ export default class Index extends Component<{}, IndexState> {
         <Clock />
       </div>
 
-      <Grid title="Initial Data" rowData={this.state.initialData} />
+      <GridComponent title="Initial Data" rowData={this.state.initialData} />
 
-      {this.state.transformedWork.map((tw, index) => <Grid key={index} title={`Transformation ${index + 1}`} rowData={tw.transformedData} formula={tw.formula} 
+      {this.state.transformedWork.map((tw, index) => <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.transformedData} formula={tw.formula} 
       onFormulaExpressionChanged={this.onFormulaExpressionChanged(index)} />)}
 
     </Layout>

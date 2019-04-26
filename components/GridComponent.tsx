@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams } from 'ag-grid-community';
+import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams } from 'ag-grid-community';
 import {Formula} from '../models/formula';
 import {RowData} from '../models/rowdata';
 import uniq from 'lodash/uniq';
@@ -16,7 +16,7 @@ export interface GridProps {
     onFormulaExpressionChanged?: Function
 }
 
-class Grid extends Component<GridProps> {
+class GridComponent extends Component<GridProps> {
     colDefs: ColDef[] = [];
 
     constructor(props: GridProps) {
@@ -71,4 +71,4 @@ class Grid extends Component<GridProps> {
     }
 }
 
-export default Grid
+export default GridComponent
