@@ -1,4 +1,4 @@
-import {Formula} from '../models/formula';
+import {ColumnFormula} from '../models/columnFormula';
 import {RowData} from '../models/rowdata';
 
 export function getInitialData(id: number): RowData[] {
@@ -12,7 +12,7 @@ export function getInitialData(id: number): RowData[] {
     }];
 }
 
-export function getTransformationFormulae(id: number): Formula[] {
+export function getTransformationFormulae(id: number): ColumnFormula[] {
     //todo: don't hardcode this, duh
-    return [new Formula('mid','($bid + $ask) / 2'), new Formula('spread','$ask - $bid')];
+    return [new ColumnFormula('mid','($bid + $ask) / 2'), new ColumnFormula('spread','$ask - $bid')];
 }

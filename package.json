@@ -8,7 +8,8 @@
     "build": "next build",
     "build-start": "next build && next start",
     "start": "next start",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -30,12 +31,14 @@
   },
   "devDependencies": {
     "@types/isomorphic-fetch": "0.0.35",
+    "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.123",
     "@types/moment": "^2.13.0",
     "@types/next": "^8.0.1",
     "@types/react": "^16.8.6",
     "autoprefixer": "^9.4.9",
     "cssnano": "^4.1.10",
+    "jest": "^24.7.1",
     "postcss-easy-import": "^3.0.0",
     "tailwindcss": "^0.7.4"
   }

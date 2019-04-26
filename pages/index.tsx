@@ -3,12 +3,13 @@ import Layout from '../components/Layout'
 import { Component } from 'react';
 import GridComponent from '../components/GridComponent';
 import Clock from '../components/Clock';
-import { Formula } from '../models/formula';
+import { ColumnFormula } from '../models/columnFormula';
 import { getInitialData, getTransformationFormulae } from '../services/data.service';
 import { transformMultipleAndShowWork } from '../services/transformer.service'
 import {RowData} from '../models/rowdata';
+import {RowFormula} from '../models/rowFormula';
 
-export interface IndexState {initialData: RowData[], formulae: Formula[], transformedWork: {formula: Formula, transformedData: RowData[]}[]};
+export interface IndexState {initialData: RowData[], formulae: ColumnFormula[], transformedWork: {formula: ColumnFormula, transformedData: RowData[]}[]};
 
 export default class Index extends Component<{}, IndexState> {
 
@@ -41,6 +42,15 @@ export default class Index extends Component<{}, IndexState> {
    }
 
   render() {
+
+    let rd: RowData = {foo: 'foo'};
+    console.log({rd});
+    let expression  = `$foo = 'bar';
+                       $bar = 'foo';`;
+    let rowFormula =  new RowFormula(expression);
+    let transformed = rowFormula.expressionToFunction()(rd);
+    console.log({transformed});
+
     return <Layout title="ETLSheets">
       <p>Test test test...</p>
 

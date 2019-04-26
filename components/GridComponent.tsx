@@ -4,7 +4,7 @@ import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams } from 'ag-grid-community';
-import {Formula} from '../models/formula';
+import {ColumnFormula} from '../models/columnFormula';
 import {RowData} from '../models/rowdata';
 import uniq from 'lodash/uniq';
 import CustomHeader from './CustomHeader';
@@ -12,7 +12,7 @@ import CustomHeader from './CustomHeader';
 export interface GridProps {
     title: string;
     rowData: RowData[];
-    formula?: Formula;
+    formula?: ColumnFormula;
     onFormulaExpressionChanged?: Function
 }
 
@@ -34,12 +34,12 @@ class GridComponent extends Component<GridProps> {
         });
 
         if (props.formula) {
-            colNames = colNames.concat(props.formula.field);
+            colNames = colNames.concat(props.formula.columnName);
         }
 
         let columnNameToColDef = (name: string) => {
             
-            if(props.formula && props.onFormulaExpressionChanged && name.toLowerCase() === props.formula.field.toLowerCase()) {
+            if(props.formula && props.onFormulaExpressionChanged && name.toLowerCase() === props.formula.columnName.toLowerCase()) {
                 return {field: name, cellClass: (params: CellClassParams) =>  isNaN(params.value) ? 'text-red' : 'text-green-dark', 
                 headerComponentFramework: CustomHeader, 
                 headerComponentParams: {formulaExpression: props.formula.expression, onFormulaExpressionChanged: this.props.onFormulaExpressionChanged}}
