@@ -91,7 +91,7 @@ class GridComponent extends Component<GridProps> {
             <div className="my-2 mr-2 text-lg text-blue">{this.props.title}
             {/* TODO: make this input box more attractive */}
             {this.props.transformer && this.props.transformer.expression
-            && <input className="shadow ml-2 text-sm appearance-none border rounded-sm  p-1 leading-tight focus:outline-none focus:shadow-outline" 
+            && <input className="shadow ml-2 text-sm appearance-none border rounded-sm w-4/5 p-1 leading-tight focus:outline-none focus:shadow-outline" 
             type="text" onChange={this.onRowExpressionChanged().bind(this)} value={this.props.transformer.expression} />}
                  
             </div>
