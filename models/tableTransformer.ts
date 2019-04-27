@@ -4,13 +4,14 @@ import { RowTransformer } from './rowTransformer';
 
 // A transformer which operates on an entire row. Can include multiple column transformers
 export class TableTransformer {
-    constructor(public rowTransformer: RowTransformer) {
+    constructor(public expression: string, public columnFormulae: ColumnTransformer[] = []) {
     }
 
     public transform(table: RowData[]): RowData[] {
+        let rowTransformer = new RowTransformer(this.expression, this.columnFormulae)
         let results: RowData[] = [];
         table.forEach(row => {
-            let result = this.rowTransformer.transform(row);
+            let result = rowTransformer.transform(row);
 
             if (result) {
                 if(result instanceof Array) {
