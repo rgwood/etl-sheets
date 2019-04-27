@@ -6,11 +6,24 @@ export class RowTransformer {
     constructor(public expression: string, public columnFormulae: ColumnTransformer[] = []) {
     }
 
-    public transform(rowData: RowData) : RowData {
+    public transform(rowData: RowData) : RowData | RowData[] | undefined {
         let ret = this.expressionToFunction()(rowData);
-        this.columnFormulae.forEach(cf => {
-            ret = cf.transform(ret)
-        });
+
+        if(ret) {
+            if(ret instanceof Array) {
+                ret.forEach(row =>  {
+                    this.columnFormulae.forEach(cf => {
+                        row = cf.transform(row)
+                    });
+                })
+            } else { //just a single row
+                this.columnFormulae.forEach(cf => {
+                    ret = cf.transform(ret as RowData)
+                });                
+            }
+
+        }
+
         return ret;
     }
 
@@ -19,6 +32,6 @@ export class RowTransformer {
     }
 
     private expressionToFunction() { 
-        return Function('row', this.convertExpressionToJsFunctionString()) as (row: RowData) => RowData;
+        return Function('row', this.convertExpressionToJsFunctionString()) as (row: RowData) => RowData | RowData[] | undefined;
     }
 }

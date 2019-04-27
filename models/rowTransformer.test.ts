@@ -2,11 +2,11 @@ import {RowTransformer} from './rowTransformer';
 import  {RowData} from './rowData';
 import {ColumnTransformer} from './columnTransformer';
 
-function testRowTransformer(input: RowData, expression: string, expected: RowData) {
+function testRowTransformer(input: RowData, expression: string, expected?: RowData) {
     testRowTransformerWithColumnFormulae(input, expression, [], expected);
 }
 
-function testRowTransformerWithColumnFormulae(input: RowData, expression: string, columnFormulae: ColumnTransformer[], expected: RowData) {
+function testRowTransformerWithColumnFormulae(input: RowData, expression: string, columnFormulae: ColumnTransformer[], expected?: RowData) {
     let formula = new RowTransformer(expression, columnFormulae);
     let result = formula.transform(input);
     expect(result).toEqual(expected);
@@ -15,6 +15,11 @@ function testRowTransformerWithColumnFormulae(input: RowData, expression: string
 test('add column to empty row', () =>{
     testRowTransformer({}, `$foo='bar'`, {foo: 'bar'});
 });
+
+test('remove row', () =>{
+    testRowTransformer({foo: 'bar'}, `return undefined;`, undefined);
+});
+
 
 test('update single column', () =>{
     testRowTransformer({foo: 'bar'}, `$foo='baz'`, {foo: 'baz'});
