@@ -1,7 +1,7 @@
-import {RowData} from './rowdata';
+import {RowData} from './rowData';
 
 // A formula which operates on a single column.
-export class ColumnFormula {
+export class ColumnTransformer {
     constructor(public columnName: string, public expression: string) {
     }
 
@@ -25,7 +25,7 @@ export class ColumnFormula {
     public expressionToFunction() { 
         return Function('row', this.convertExpressionToJsFunctionString()) as (row: RowData) => any;
     }
-    
+
     private clone(data: RowData): RowData {
             // very hacky way to do a deep clone
             let cloned: RowData = JSON.parse(JSON.stringify(data));

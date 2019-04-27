@@ -1,12 +1,14 @@
-import {RowData} from './rowdata';
-import { ColumnFormula } from './columnFormula';
+import {RowData} from './rowData';
+import { ColumnTransformer } from './columnTransformer';
+import { RowTransformer } from './rowTransformer';
 
-// A formula which operates on a single column.
-export class RowFormula {
-    constructor(public expression: string, public columnFormulae: ColumnFormula[] = []) {
+// A transformer which operates on an entire row. Can include multiple column transformers
+export class TableTransformer {
+    constructor(public rowTransformer: RowTransformer) {
     }
 
-    public transform(rowData: RowData) : RowData {
+    public transform(table: RowData[]) : RowData[] {
+
         let ret = this.expressionToFunction()(rowData);
         this.columnFormulae.forEach(cf => {
             ret = cf.transform(ret)

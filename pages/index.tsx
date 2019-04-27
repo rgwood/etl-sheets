@@ -3,13 +3,13 @@ import Layout from '../components/Layout'
 import { Component } from 'react';
 import GridComponent from '../components/GridComponent';
 import Clock from '../components/Clock';
-import { ColumnFormula } from '../models/columnFormula';
+import { ColumnTransformer } from '../models/columnTransformer';
 import { getInitialData, getTransformationFormulae } from '../services/data.service';
 import { transformMultipleAndShowWork } from '../services/transformer.service'
-import {RowData} from '../models/rowdata';
-import {RowFormula} from '../models/rowFormula';
+import {RowData} from '../models/rowData';
+import {RowTransformer} from '../models/rowTransformer';
 
-export interface IndexState {initialData: RowData[], formulae: ColumnFormula[], transformedWork: {formula: ColumnFormula, transformedData: RowData[]}[]};
+export interface IndexState {initialData: RowData[], formulae: ColumnTransformer[], transformedWork: {formula: ColumnTransformer, transformedData: RowData[]}[]};
 
 export default class Index extends Component<{}, IndexState> {
 
@@ -47,7 +47,7 @@ export default class Index extends Component<{}, IndexState> {
     console.log({rd});
     let expression  = `$foo = 'bar';
                        $bar = 'foo';`;
-    let rowFormula =  new RowFormula(expression);
+    let rowFormula =  new RowTransformer(expression);
     let transformed = rowFormula.expressionToFunction()(rd);
     console.log({transformed});
 

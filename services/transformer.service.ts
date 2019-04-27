@@ -1,9 +1,9 @@
-import {ColumnFormula} from '../models/columnFormula';
-import {RowData} from '../models/rowdata';
+import {ColumnTransformer} from '../models/columnTransformer';
+import {RowData} from '../models/rowData';
 
 // TODO: this is insanely inefficient and it will catch up with me someday. Spend some time thinking about copies+efficiency
 
-export function transform(data: RowData[], formula: ColumnFormula): RowData[] {
+export function transform(data: RowData[], formula: ColumnTransformer): RowData[] {
     let cloned = clone(data);
 
     cloned.forEach(row => {
@@ -24,8 +24,8 @@ function clone(data: RowData[]): RowData[] {
         return cloned;
 }
 
-export function transformMultipleAndShowWork(initialData: RowData[], formulae: ColumnFormula[]): {formula: ColumnFormula, transformedData: RowData[]}[] {
-    let results: {formula: ColumnFormula, transformedData: RowData[]}[] = [];
+export function transformMultipleAndShowWork(initialData: RowData[], formulae: ColumnTransformer[]): {formula: ColumnTransformer, transformedData: RowData[]}[] {
+    let results: {formula: ColumnTransformer, transformedData: RowData[]}[] = [];
     let currentData = initialData;
     formulae.forEach(f => {
         let transformed = transform(currentData, f);

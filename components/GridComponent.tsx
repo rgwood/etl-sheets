@@ -4,15 +4,15 @@ import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams } from 'ag-grid-community';
-import {ColumnFormula} from '../models/columnFormula';
-import {RowData} from '../models/rowdata';
+import {ColumnTransformer} from '../models/columnTransformer';
+import {RowData} from '../models/rowData';
 import uniq from 'lodash/uniq';
 import CustomHeader from './CustomHeader';
 
 export interface GridProps {
     title: string;
     rowData: RowData[];
-    formula?: ColumnFormula;
+    formula?: ColumnTransformer;
     onFormulaExpressionChanged?: Function
 }
 

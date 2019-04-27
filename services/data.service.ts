@@ -1,5 +1,5 @@
-import {ColumnFormula} from '../models/columnFormula';
-import {RowData} from '../models/rowdata';
+import {ColumnTransformer} from '../models/columnTransformer';
+import {RowData} from '../models/rowData';
 
 export function getInitialData(id: number): RowData[] {
     // todo: don't hardcode this, duh
@@ -12,7 +12,7 @@ export function getInitialData(id: number): RowData[] {
     }];
 }
 
-export function getTransformationFormulae(id: number): ColumnFormula[] {
+export function getTransformationFormulae(id: number): ColumnTransformer[] {
     //todo: don't hardcode this, duh
-    return [new ColumnFormula('mid','($bid + $ask) / 2'), new ColumnFormula('spread','$ask - $bid')];
+    return [new ColumnTransformer('mid','($bid + $ask) / 2'), new ColumnTransformer('spread','$ask - $bid')];
 }
