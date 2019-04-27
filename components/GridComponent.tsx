@@ -14,7 +14,7 @@ export interface GridProps {
     title: string;
     rowData: RowData[];
     transformer?: TableTransformer;
-    onTransformerChanged?: Function
+    onTransformerChanged?: (newValue:TableTransformer) => void
 }
 
 class GridComponent extends Component<GridProps> {
@@ -23,6 +23,24 @@ class GridComponent extends Component<GridProps> {
     constructor(props: GridProps) {
         super(props);
         this.colDefs = this.getColDefs(props);
+    }
+
+    onRowExpressionChanged() {
+        return (event: React.ChangeEvent<HTMLInputElement>) => {
+            let newExpression = event.target.value;
+            let transformer = this.props.transformer!;
+            transformer.expression = newExpression;
+            this.props.onTransformerChanged!(transformer);
+        }
+    }
+
+    onColumnExpressionChanged(columnName: string) {
+        return (newExpression: string) => {
+            let transformer = this.props.transformer!;
+            let formula = transformer.columnFormulae.find(cf => cf.columnName.toLowerCase() === columnName.toLowerCase())!;
+            formula.expression = newExpression;
+            this.props.onTransformerChanged!(transformer);
+        }
     }
 
     // find the name of all columns to be displayed, either b/c it's in the data or the formula
@@ -47,7 +65,7 @@ class GridComponent extends Component<GridProps> {
                 return {
                     field: name, cellClass: (params: CellClassParams) => isNaN(params.value) ? 'text-red' : 'text-green-dark',
                     headerComponentFramework: CustomHeader,
-                    headerComponentParams: { formulaExpression: columnFormula.expression, onFormulaExpressionChanged: this.props.onTransformerChanged }
+                    headerComponentParams: { formulaExpression: columnFormula.expression, onFormulaExpressionChanged: this.onColumnExpressionChanged(name) }
                 }
             }
 
@@ -71,9 +89,10 @@ class GridComponent extends Component<GridProps> {
     render() {
         return <div>
             <div className="my-2 mr-2 text-lg text-blue">{this.props.title}
+            {/* TODO: make this input box more attractive */}
             {this.props.transformer && this.props.transformer.expression
-            && <input className="shadow appearance-none border rounded-sm w-4/5 p-1leading-tight focus:outline-none focus:shadow-outline" 
-            id="username" type="text" value={this.props.transformer.expression}/>}
+            && <input className="shadow ml-2 text-sm appearance-none border rounded-sm  p-1 leading-tight focus:outline-none focus:shadow-outline" 
+            type="text" onChange={this.onRowExpressionChanged().bind(this)} value={this.props.transformer.expression} />}
                  
             </div>
             <div className="ag-theme-balham" >

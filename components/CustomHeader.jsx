@@ -21,7 +21,7 @@ export default class CustomHeader extends React.Component {
             {/* {this.props.formulaExpression} */}
             {this.props.formulaExpression && 
             <input className="shadow appearance-none border rounded-sm w-4/5 p-1 text-green-dark leading-tight focus:outline-none focus:shadow-outline" 
-            id="username" type="text" onChange={this.onExpressionChanged.bind(this)} value={this.state.formulaExpression}/>}
+            type="text" onChange={this.onExpressionChanged.bind(this)} value={this.state.formulaExpression}/>}
             </div>
             {this.props.displayName}</div>
         </div>

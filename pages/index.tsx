@@ -22,6 +22,17 @@ export default class Index extends Component<{}, IndexState> {
     this.state = {initialData: initialData, transformers: transformers, transformedWork: transformedWork };
 }
 
+   onTransformerChanged(index: number) {
+     return (newValue:TableTransformer) => {
+       console.log(`${index} ${newValue}`);
+
+       let transformers = this.state.transformers;
+       transformers[index] = newValue;
+       this.setState({transformers: transformers});
+       this.rerunTransformations();
+      };
+   }
+
 //TODO: fix these up with the new transformer metaphor
   //  onFormulaExpressionChanged(index: number) {
   //    return (newValue:string) => {
@@ -34,22 +45,14 @@ export default class Index extends Component<{}, IndexState> {
   //     };
   //  }
 
-  //  rerunTransformations() {
-  //   let initialData = this.state.initialData;
-  //   let formulae = this.state.formulae;
-  //   console.log({formulae});
-  //   let transformedWork = transformMultipleAndShowWork(initialData, formulae);
-  //   console.log(transformedWork);
-  //   this.setState({initialData: initialData, formulae: formulae, transformedWork: transformedWork });
-  //  }
+   rerunTransformations() {
+    let initialData = this.state.initialData;
+    let transformers = this.state.transformers;
+    let transformedWork = transformMultipleAndShowWork(initialData, transformers);
+    this.setState({initialData: initialData, transformers: transformers, transformedWork: transformedWork });
+   }
 
   render() {
-
-    let expression  = `return [row, row];`;
-    let columnTransformer = new ColumnTransformer('bar',`'bar'`);
-    let transformer = new TableTransformer(expression, [columnTransformer]);
-    let transformed = transformer.transform(this.state.initialData);
-    
     return <Layout title="ETLSheets">
       <p>Test test test...</p>
 
@@ -59,7 +62,9 @@ export default class Index extends Component<{}, IndexState> {
 
       <GridComponent title="Initial Data" rowData={this.state.initialData} />
 
-      {this.state.transformedWork.map((tw, index) => <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer} 
+      {this.state.transformedWork.map((tw, index) => 
+      <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer} 
+      onTransformerChanged = {this.onTransformerChanged(index)}
       />)}
 {/* 
       {this.state.transformedWork.map((tw, index) => <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.transformedData} formula={tw.formula} 

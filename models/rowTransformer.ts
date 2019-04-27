@@ -8,7 +8,15 @@ export class RowTransformer {
 
     public transform(rowData: RowData): RowData | RowData[] | undefined {
         let cloned = this.clone(rowData);
-        let afterRowTransform = this.expressionToFunction()(cloned);
+
+        let afterRowTransform: RowData | RowData[] | undefined  = undefined;
+        
+        //todo: proper error handling
+        try {
+            afterRowTransform = this.expressionToFunction()(cloned);
+        } catch (error) {
+            console.error({error});
+        }
 
         if (!afterRowTransform) {
             return afterRowTransform;
