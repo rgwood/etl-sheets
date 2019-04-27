@@ -1,4 +1,4 @@
-import {RowData} from './rowData';
+import { RowData } from './rowData';
 import { ColumnTransformer } from './columnTransformer';
 import { RowTransformer } from './rowTransformer';
 
@@ -7,20 +7,19 @@ export class TableTransformer {
     constructor(public rowTransformer: RowTransformer) {
     }
 
-    public transform(table: RowData[]) : RowData[] {
+    public transform(table: RowData[]): RowData[] {
+        let results: RowData[] = [];
+        table.forEach(row => {
+            let result = this.rowTransformer.transform(row);
 
-        let ret = this.expressionToFunction()(rowData);
-        this.columnFormulae.forEach(cf => {
-            ret = cf.transform(ret)
+            if (result) {
+                if(result instanceof Array) {
+                    (result as RowData[]).forEach(rd => results.push(rd));
+                } else { //just a single row
+                    results.push(result as RowData);
+                }
+            }
         });
-        return ret;
-    }
-
-    private convertExpressionToJsFunctionString() {
-        return `${this.expression.replace(/\$/g, 'row.')}; return row;`
-    }
-
-    private expressionToFunction() { 
-        return Function('row', this.convertExpressionToJsFunctionString()) as (row: RowData) => RowData;
+        return results;
     }
 }

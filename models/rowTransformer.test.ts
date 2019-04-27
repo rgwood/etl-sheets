@@ -2,11 +2,11 @@ import {RowTransformer} from './rowTransformer';
 import  {RowData} from './rowData';
 import {ColumnTransformer} from './columnTransformer';
 
-function testRowTransformer(input: RowData, expression: string, expected?: RowData) {
+function testRowTransformer(input: RowData, expression: string, expected?: RowData | RowData[]) {
     testRowTransformerWithColumnFormulae(input, expression, [], expected);
 }
 
-function testRowTransformerWithColumnFormulae(input: RowData, expression: string, columnFormulae: ColumnTransformer[], expected?: RowData) {
+function testRowTransformerWithColumnFormulae(input: RowData, expression: string, columnFormulae: ColumnTransformer[], expected?: RowData | RowData[]) {
     let formula = new RowTransformer(expression, columnFormulae);
     let result = formula.transform(input);
     expect(result).toEqual(expected);
@@ -35,6 +35,14 @@ test('add 2 columns', () =>{
 
 test('empty expression changes nothing', () =>{
     testRowTransformer({foo: 'bar'}, ``, {foo: 'bar'});
+});
+
+test('split row into 2 rows', () => {
+    testRowTransformer({foo: 'bar'}, `return [row, row];`, [{foo: 'bar'}, {foo: 'bar'}]);
+});
+
+test('filter expression returns nothing', () =>{
+    testRowTransformer({foo: 'bar'}, `return undefined;`, undefined);
 });
 
 test('use column formula to add column to empty row', () =>{
