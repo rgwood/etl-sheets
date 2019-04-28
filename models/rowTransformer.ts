@@ -3,6 +3,7 @@ import { ColumnTransformer } from './columnTransformer';
 
 // A transformer which operates on an entire row. Can include multiple column transformers
 export class RowTransformer {
+
     constructor(public expression: string, public columnFormulae: ColumnTransformer[] = []) {
     }
 

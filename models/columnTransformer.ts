@@ -1,4 +1,5 @@
 import {RowData} from './rowData';
+import * as esprima from 'esprima';
 
 // A formula which operates on a single column.
 export class ColumnTransformer {

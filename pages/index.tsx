@@ -22,8 +22,6 @@ export default class Index extends Component<{}, IndexState> {
 
   onTransformerChanged(index: number) {
     return (newValue: TableTransformer) => {
-      console.log(`${index} ${newValue}`);
-
       let transformers = this.state.transformers;
       transformers[index] = newValue;
       this.setState({ transformers: transformers });

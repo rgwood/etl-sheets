@@ -1,11 +1,34 @@
 import { RowData } from './rowData';
 import { ColumnTransformer } from './columnTransformer';
 import { RowTransformer } from './rowTransformer';
+import * as esprima from 'esprima';
 
 // A transformer which operates on an entire row. Can include multiple column transformers
 export class TableTransformer {
-    constructor(public expression: string, public columnFormulae: ColumnTransformer[] = []) {
+    public expressionIsValid: boolean = true;
+
+    private _expression: string = '';
+    get expression(): string {
+        return this._expression;
     }
+    set expression(exp: string) {
+        try {
+            // Esprima does not allow return statements on their own
+            let wrappedExpression = `function f() {${exp}}`
+            esprima.parseScript(wrappedExpression);
+            this.expressionIsValid = true;
+        } catch (error) {
+            this.expressionIsValid = false;
+        }
+
+        this._expression = exp;
+    }
+
+    constructor(expression: string, public columnFormulae: ColumnTransformer[] = []) {
+        this.expression = expression;
+    }
+
+    public expressionError: boolean = false;
 
     public transform(table: RowData[]): RowData[] {
         let rowTransformer = new RowTransformer(this.expression, this.columnFormulae)

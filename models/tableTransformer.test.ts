@@ -3,7 +3,6 @@ import  {RowData} from './rowData';
 import {ColumnTransformer} from './columnTransformer';
 import {TableTransformer} from './tableTransformer';
 
-
 function testTransformer(input: RowData[], transformer: TableTransformer, expected: RowData[]) {
     expect(transformer.transform(input)).toEqual(expected);
 }
@@ -40,4 +39,3 @@ test('split row into 2 then use column transformer - 2', () => {
     let columnTransformer = new ColumnTransformer('bar',`'bar'`);
     testTransformer(input, new TableTransformer(expression, [columnTransformer]), [{foo: 'foo', bar: 'bar'},{foo: 'foo', bar:'bar'}]);
 });
-
