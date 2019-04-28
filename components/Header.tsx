@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Header = () => (
   <div className="mb-4">
-    <Link href="/">
+    <Link href="/extractDashboard">
       <a className="p-2 shadow rounded bg-white hover:bg-grey-lighter text-lg text-purple-dark no-underline">Extract Dashboard</a>
     </Link>
     <Link href="/">
