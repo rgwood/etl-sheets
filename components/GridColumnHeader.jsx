@@ -4,7 +4,7 @@ import * as esprima from 'esprima';
 import * as classNames from 'classnames';
 
 // Header component to be used as default for all the columns.
-export default class CustomHeader extends React.Component {
+export default class GridColumnHeader extends React.Component {
 
     constructor(props) {
         super(props);
@@ -54,6 +54,6 @@ export default class CustomHeader extends React.Component {
 // which is the grid passing you the params for the cellRenderer.
 // this piece is optional. the grid will always pass the 'params'
 // props, so little need for adding this validation meta-data.
-CustomHeader.propTypes = {
+GridColumnHeader.propTypes = {
     params: PropTypes.object
 };

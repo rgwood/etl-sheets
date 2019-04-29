@@ -7,7 +7,7 @@ import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClas
 import { ColumnTransformer } from '../models/columnTransformer';
 import { RowData } from '../models/rowData';
 import uniq from 'lodash/uniq';
-import CustomHeader from './CustomHeader';
+import GridColumnHeader from './GridColumnHeader';
 import { TableTransformer } from '../models/tableTransformer';
 import classNames from 'classnames'
 
@@ -65,12 +65,12 @@ class GridComponent extends Component<GridProps> {
             if (columnTransformer) {
                 return {
                     field: name, cellClass: (params: CellClassParams) => isNaN(params.value) ? 'text-red' : 'text-green-dark',
-                    headerComponentFramework: CustomHeader,
+                    headerComponentFramework: GridColumnHeader,
                     headerComponentParams: { formulaExpression: columnTransformer.expression, onFormulaExpressionChanged: this.onColumnExpressionChanged(name) }
                 }
             }
 
-            return { field: name, headerComponentFramework: CustomHeader, }
+            return { field: name, headerComponentFramework: GridColumnHeader, }
         };
 
         return colNames.map(cn => columnNameToColDef(cn));

@@ -10,7 +10,7 @@ interface ActiveLinkProps {
     notificationCount?: number;
 }
 
-const ActiveLink: React.SFC<ActiveLinkProps> = (props) => {
+const HeaderElement: React.SFC<ActiveLinkProps> = (props) => {
 
     let isActive = props.href === props.router.pathname;
 
@@ -31,4 +31,4 @@ const ActiveLink: React.SFC<ActiveLinkProps> = (props) => {
     </Link>
 }
 
-export default withRouter(ActiveLink);
+export default withRouter(HeaderElement);
