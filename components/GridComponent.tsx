@@ -90,7 +90,7 @@ class GridComponent extends Component<GridProps> {
 
     render() {
         return <div>
-            <div className="my-2 mr-2 text-lg text-blue">{this.props.title}
+            <div className="my-2 mr-2 text-lg text-alloy-teal-light font-serif">{this.props.title}
             {/* TODO: make this input box more attractive */}
             {this.props.transformer && this.props.transformer.expression
             && <input className={classNames("shadow ml-2 text-sm appearance-none border rounded-sm w-4/5 p-1 leading-tight focus:outline-none focus:shadow-outline", {"text-red": !this.props.transformer.expressionIsValid})} 

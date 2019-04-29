@@ -15,10 +15,10 @@ const HeaderElement: React.SFC<ActiveLinkProps> = (props) => {
     let isActive = props.href === props.router.pathname;
 
     return <Link href={props.href}>
-        <a className={classNames("relative p-2 shadow rounded text-lg text-purple-dark no-underline",
+        <a className={classNames("relative p-2 font-sans shadow rounded text-lg no-underline",
             props.extraClasses ? props.extraClasses : '',
-            isActive ? "bg-yellow-light" : "bg-white",
-            isActive ? "hover:bg-yellow" : "hover:bg-yellow-lighter",
+            isActive ? "bg-alloy-teal-light text-white" : "bg-white text-alloy-teal-light",
+            !isActive && "hover:bg-yellow-lighter",
         )}>
         {props.text}
         {/* HACK: Only show notifications for non-active tag. This is a cheap way of pretending that notifications are marked as read when a page is opened*/

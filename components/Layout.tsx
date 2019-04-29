@@ -12,7 +12,7 @@ const Layout = (props: Props) => (
         <Header />
         <div className="p-4 shadow rounded bg-white">
             <div id="contentTitle" className="flex">
-                <span className="flex-2 text-purple text-3xl">{props.title}</span>
+                <span className="flex-2 text-alloy-teal-dark font-sans font-bold text-3xl">{props.title}</span>
                 {props.topRightText ? <span className="flex-1 relative pin-t pin-r text-right text-grey-dark font-bold text-md">{props.topRightText}</span> : ''}
             </div>
             <div />
