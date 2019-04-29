@@ -1,22 +1,12 @@
-import Link from 'next/link'
+import ActiveLink from './ActiveLink'
 
-const Header = () => (
-  <div className="mb-4">
-    <Link href="/">
-      <a className="p-2 shadow rounded bg-white hover:bg-grey-lighter text-lg text-purple-dark no-underline">Home</a>
-    </Link>
-    <Link href="/extractDashboard">
-      <a className="p-2 ml-2 shadow rounded bg-white hover:bg-grey-lighter text-lg text-purple-dark no-underline">Extracts</a>
-    </Link>
-    <Link href="/">
-      <a className="relative p-2 ml-2 shadow rounded bg-white hover:bg-grey-lighter text-lg text-purple-dark no-underline">Transforms
-      <span className="absolute pin-t pin-r flex w-4 h-4 -mt-2 -mr-2 justify-center items-center text-xs font-medium text-red-lightest bg-red rounded-full">1</span>
-      </a>
-    </Link>
-    <Link href="/about">
-      <a className="p-2 ml-2 shadow rounded bg-white hover:bg-grey-lighter text-lg text-purple-dark no-underline">About</a>
-    </Link>
-  </div>
-)
+const Header = () => {
+  return <div className="mb-4">
+  <ActiveLink href='/' text='Home' extraClasses='mr-2' ></ActiveLink>
+  <ActiveLink href='/extractDashboard' text='Extracts' extraClasses='mr-2'></ActiveLink>
+  <ActiveLink href='/transformDashboard' text='Transforms' extraClasses='mr-2' notificationCount={1} ></ActiveLink>
+  <ActiveLink href='/about' text='About' extraClasses='mr-2'  ></ActiveLink>
+  </div>;
+}
 
 export default Header

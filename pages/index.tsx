@@ -38,7 +38,6 @@ export default class Index extends Component<{}, IndexState> {
 
   render() {
     return <Layout title="ETL Dashboard">
-      <p>Test test test...</p>
 
       <div className="mt-4">
         <Clock />

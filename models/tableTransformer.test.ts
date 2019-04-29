@@ -1,4 +1,3 @@
-import {RowTransformer} from './rowTransformer';
 import  {RowData} from './rowData';
 import {ColumnTransformer} from './columnTransformer';
 import {TableTransformer} from './tableTransformer';
