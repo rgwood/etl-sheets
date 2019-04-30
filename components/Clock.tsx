@@ -11,9 +11,9 @@ function Clock() {
         timerId = setInterval(() => setTime(moment.now()), 1000);
         return () => clearInterval(timerId);
     });
-    return <div className="text-sm">
-        {moment(time).utc().format('YYYY-MM-DD HH:mm:ss' + ' (UTC)')}
-    </div>
+    return <span className="text-sm">
+        {`${moment(time).utc().format('YYYY-MM-DD HH:mm:ss')} (UTC)`}
+    </span>
 }
 
 export default Clock
