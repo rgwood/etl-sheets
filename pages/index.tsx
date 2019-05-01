@@ -3,12 +3,14 @@ import Layout from '../components/Layout'
 import { Component } from 'react';
 import GridComponent from '../components/GridComponent';
 import Clock from '../components/Clock';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { getInitialData, getTransformers } from '../services/data.service';
 import { transformMultipleAndShowWork } from '../services/transformer.service'
 import { RowData } from '../models/rowData';
 import { TableTransformer } from '../models/tableTransformer';
 import { AgGridReact } from 'ag-grid-react';
-import { ColumnApi, GridApi, GridReadyEvent, ColDef, GridOptions } from 'ag-grid-community';
+import { ColumnApi, GridApi, GridReadyEvent, ColDef, GridOptions, RowDoubleClickedEvent } from 'ag-grid-community';
 import Router from 'next/router'
 
 export interface IndexState { initialData: RowData[], transformers: TableTransformer[], transformedWork: { transformer: TableTransformer, output: RowData[] }[] };
@@ -39,18 +41,18 @@ export default class Index extends Component<{}, IndexState> {
     this.setState({ initialData: initialData, transformers: transformers, transformedWork: transformedWork });
   }
 
-  private recentIssueData = [{time:'2019-05-24 14:12:48', description:'2PM Bloomberg Extract', type:'Transform'},
-  {time:'2019-05-24 13:27:29', description:'Afternoon FTSE Sector Extract', type:'Transform'},
-  {time:'2019-05-24 13:11:36', description:'Afternoon FTSE Index Extract', type:'Transform'}
+  private recentIssueData = [{id: 1345, time:'2019-05-24 14:12:48', description:'2PM Bloomberg Extract', type:'Transform'},
+  {id: 3456, time:'2019-05-24 13:27:29', description:'Afternoon FTSE Sector Extract', type:'Transform'},
+  {id: 4564, time:'2019-05-24 13:11:36', description:'Afternoon FTSE Index Extract', type:'Transform'}
 ];
 
   gridApi!: GridApi;
   columnApi!: ColumnApi;
   colDefs: ColDef[] = [{field:'time', headerName:'Time (UTC)', maxWidth: 150}, {field:'description'}, {field: 'type'}];
 
-  doubleClickRow() {
-    console.log('clicked');
-    Router.push(`/transform`);
+  doubleClickRow(event: RowDoubleClickedEvent ) {
+    let dataType: string = event.data.type;
+    Router.push(`/${dataType.toLowerCase()}?id=${event.data.id}`);
   }
 
   gridOptions: GridOptions = { domLayout: 'autoHeight', onRowDoubleClicked: this.doubleClickRow};
@@ -64,7 +66,7 @@ export default class Index extends Component<{}, IndexState> {
   render() {
     return <Layout title="ETL Dashboard">
       <div className="my-4">
-        Welcome. There are currently <span className="text-red">12</span> unresolved issues (<a className='text-blue' href='/fakeLink'>1 new</a>).
+        Welcome. There are currently <span className="text-red">12</span> unresolved issues (<a className='text-blue' href='/transform'>1 new</a>).
       </div>
 
       <div className="mt-4 mb-2 text-lg text-alloy-teal-light font-serif">Search</div>
