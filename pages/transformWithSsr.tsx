@@ -2,17 +2,18 @@ import '../styles/index.css'
 import Layout from '../components/Layout'
 import { Component } from 'react';
 import GridComponent from '../components/GridComponent';
-import Clock from '../components/Clock';
 import { getInitialData, getTransformers } from '../services/data.service';
 import { transformMultipleAndShowWork } from '../services/transformer.service'
 import { RowData } from '../models/rowData';
 import { TableTransformer } from '../models/tableTransformer';
 import Link from 'next/link';
 import AceEditor from 'react-ace';
+import { NextContext } from 'next';
+import { withRouter } from 'next/router';
 
 export interface TransformState { initialData: RowData[], transformers: TableTransformer[], transformedWork: { transformer: TableTransformer, output: RowData[] }[] };
 
-export default class TransformWithSsr extends Component<{}, TransformState> {
+class TransformWithSsr extends Component<{router: SingletonRouter}, TransformState> {
 
     constructor(props: any) {
         super(props);
@@ -22,8 +23,8 @@ export default class TransformWithSsr extends Component<{}, TransformState> {
         this.state = { initialData: initialData, transformers: transformers, transformedWork: transformedWork };
     }
 
-    static async getInitialProps() {
-
+    static async getInitialProps({query}: NextContext) {
+        console.log({query});
     }
 
     onTransformerChanged(index: number) {
@@ -43,8 +44,9 @@ export default class TransformWithSsr extends Component<{}, TransformState> {
     }
 
     render() {
+        let query = this.props.router.query;
         return <Layout title="2PM Bloomberg Import">
-        <div className="mt-2">ID: 18234867</div>
+        <div className="mt-2">ID: {query.id}</div>
 
             <div className="mt-4 mb-2 text-lg text-alloy-teal-light font-serif">History</div>
 
@@ -87,3 +89,5 @@ export default class TransformWithSsr extends Component<{}, TransformState> {
     }
 
 }
+
+export default withRouter(TransformWithSsr)
