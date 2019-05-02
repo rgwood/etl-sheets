@@ -9,3 +9,7 @@ body {
   height: 100%;
   margin-top:0;
 }
+
+.ace_hidden-cursors {
+  opacity:0
+} 

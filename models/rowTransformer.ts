@@ -44,11 +44,16 @@ export class RowTransformer {
     }
 
     private convertExpressionToJsFunctionString() {
-        return `${this.expression.replace(/\$/g, 'row.')}; return row;`
+
+        // This is the absolute craziest way of defining helper functions, but Function doesn't have access to local scope
+        var helpers = `function duplicate(row) {return [row,row];};`
+
+        return `${helpers}${this.expression.replace(/\$/g, 'row.')}; 
+        return row;`
     }
 
     private expressionToFunction() {
-        return Function('row', this.convertExpressionToJsFunctionString()) as (row: RowData) => RowData | RowData[] | undefined;
+        return Function('row', this.convertExpressionToJsFunctionString())as (row: RowData) => RowData | RowData[] | undefined;
     }
 
     private clone<T>(data: T): T {

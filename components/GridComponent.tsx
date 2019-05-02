@@ -10,6 +10,10 @@ import uniq from 'lodash/uniq';
 import GridColumnHeader from './GridColumnHeader';
 import { TableTransformer } from '../models/tableTransformer';
 import classNames from 'classnames'
+import AceEditor, { EditorProps, AceEditorProps } from 'react-ace';
+import brace from 'brace';
+import 'brace/mode/javascript';
+import 'brace/theme/textmate';
 
 export interface GridProps {
     title: string;
@@ -20,10 +24,18 @@ export interface GridProps {
 
 class GridComponent extends Component<GridProps> {
     colDefs: ColDef[] = [];
+    hasExpression: boolean = false;
 
     constructor(props: GridProps) {
         super(props);
         this.colDefs = this.getColDefs(props);
+        this.hasExpression = !!this.props.transformer && !!this.props.transformer.expression;
+    }
+
+    // Update the column defs whenever props change. This is potentially really slow, can disable if we need speed for bigger transforms
+    componentWillReceiveProps(newProps:any)  {
+        this.colDefs = this.getColDefs(newProps);
+        this.gridApi.sizeColumnsToFit();
     }
 
     onRowExpressionChanged() {
@@ -33,6 +45,12 @@ class GridComponent extends Component<GridProps> {
             transformer.expression = newExpression;
             this.props.onTransformerChanged!(transformer);
         }
+    }
+
+    onAceEditorChanged(newExpressionValue: string) {
+        let transformer = this.props.transformer!;
+        transformer.expression = newExpressionValue;
+        this.props.onTransformerChanged!(transformer);
     }
 
     onColumnExpressionChanged(columnName: string) {
@@ -51,6 +69,7 @@ class GridComponent extends Component<GridProps> {
         props.rowData.forEach(rd => {
             colNames = colNames.concat(Object.keys(rd));
         });
+
         colNames = uniq(colNames);
 
         let columnTransformerFromName = (colName: string) => {
@@ -91,11 +110,22 @@ class GridComponent extends Component<GridProps> {
     render() {
         return <div>
             <div className="my-2 mr-2 text-lg text-alloy-teal-light font-serif">{this.props.title}
-            {/* TODO: make this input box more attractive */}
-            {this.props.transformer && this.props.transformer.expression
-            && <input className={classNames("shadow ml-2 text-sm appearance-none border rounded-sm w-4/5 p-1 leading-tight focus:outline-none focus:shadow-outline", {"text-red": !this.props.transformer.expressionIsValid})} 
-            type="text" onChange={this.onRowExpressionChanged().bind(this)} value={this.props.transformer.expression} />}
-                 
+                 {this.hasExpression &&
+                 <div className="my-2 p-1 border rounded-sm shadow">
+                 <AceEditor
+                    mode="javascript"
+                    theme="textmate"
+                     onChange={this.onAceEditorChanged.bind(this)}
+                    fontSize={12}
+                    showPrintMargin={true}
+                    showGutter={false}
+                    highlightActiveLine={false}
+                    value={this.props.transformer ? this.props.transformer.expression: ''}
+                    setOptions={{
+                    showLineNumbers: false,
+                    tabSize: 2,
+                     maxLines: 100
+                    }}/></div>}
             </div>
             <div className="ag-theme-balham" >
                 <AgGridReact columnDefs={this.colDefs} rowData={this.props.rowData} gridOptions={this.gridOptions}

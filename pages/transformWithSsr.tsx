@@ -7,7 +7,6 @@ import { transformMultipleAndShowWork } from '../services/transformer.service'
 import { RowData } from '../models/rowData';
 import { TableTransformer } from '../models/tableTransformer';
 import Link from 'next/link';
-import AceEditor from 'react-ace';
 import { NextContext } from 'next';
 import { withRouter } from 'next/router';
 
@@ -62,29 +61,6 @@ class TransformWithSsr extends Component<{router: SingletonRouter}, TransformSta
                 <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
                     onTransformerChanged={this.onTransformerChanged(index)}
                 />)}
-
-<AceEditor
-  mode="javascript"
-  theme="solarized_light"
-  name="blah2"
-//   onLoad={this.onLoad}
-//   onChange={this.onChange}
-  fontSize={14}
-  showPrintMargin={true}
-  showGutter={true}
-  highlightActiveLine={true}
-  value={`function onLoad(editor) {
-  console.log("i've loaded");
-}`}
-  setOptions={{
-  enableBasicAutocompletion: false,
-  enableLiveAutocompletion: true,
-  enableSnippets: false,
-  showLineNumbers: true,
-  tabSize: 2,
-  }}/>
-            
-
         </Layout>
     }
 
