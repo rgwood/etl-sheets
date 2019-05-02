@@ -1,57 +1,36 @@
 import '../styles/index.css'
 import Layout from '../components/Layout'
 import { Component } from 'react';
-import GridComponent from '../components/GridComponent';
-import Clock from '../components/Clock';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { getInitialData, getTransformers } from '../services/data.service';
-import { transformMultipleAndShowWork } from '../services/transformer.service'
 import { RowData } from '../models/rowData';
 import { TableTransformer } from '../models/tableTransformer';
 import { AgGridReact } from 'ag-grid-react';
-import { ColumnApi, GridApi, GridReadyEvent, ColDef, GridOptions, RowDoubleClickedEvent } from 'ag-grid-community';
+import { ColumnApi, GridApi, GridReadyEvent, ColDef, GridOptions, RowDoubleClickedEvent, CellClassParams } from 'ag-grid-community';
 import Router from 'next/router'
 
 export interface IndexState { initialData: RowData[], transformers: TableTransformer[], transformedWork: { transformer: TableTransformer, output: RowData[] }[] };
 
 export default class Index extends Component<{}, IndexState> {
 
-  constructor(props: any) {
-    super(props);
-    let initialData = getInitialData(1);
-    let transformers = getTransformers(1);
-    let transformedWork = transformMultipleAndShowWork(initialData, transformers);
-    this.state = { initialData: initialData, transformers: transformers, transformedWork: transformedWork };
-  }
-
-  onTransformerChanged(index: number) {
-    return (newValue: TableTransformer) => {
-      let transformers = this.state.transformers;
-      transformers[index] = newValue;
-      this.setState({ transformers: transformers });
-      this.rerunTransformations();
-    };
-  }
-
-  rerunTransformations() {
-    let initialData = this.state.initialData;
-    let transformers = this.state.transformers;
-    let transformedWork = transformMultipleAndShowWork(initialData, transformers);
-    this.setState({ initialData: initialData, transformers: transformers, transformedWork: transformedWork });
-  }
-
-  private recentIssueData = [{id: 1345, time:'2019-05-24 14:12:48', description:'2PM Bloomberg Extract', type:'Transform'},
-  {id: 3456, time:'2019-05-24 13:27:29', description:'Afternoon FTSE Sector Extract', type:'Transform'},
-  {id: 4564, time:'2019-05-24 13:11:36', description:'Afternoon FTSE Index Extract', type:'Transform'}
+  private recentIssueData = [{id: 4564980, time:'2019-05-24 14:12:48', description:'2PM Bloomberg Fixing Rates', stage:'Transform', status: 'Error'},
+  {id: 4564979, time:'2019-05-24 13:27:29', description:'Afternoon FTSE Sector Constituents', stage:'Transform', status: 'Resolved'},
+  {id: 4564978, time:'2019-05-24 13:11:36', description:'Afternoon FTSE Indexes', stage:'Transform', status: 'Resolved'},
+  {id: 4564977, time:'2019-05-24 13:00:18', description:'Tokyo Stock Exchange TOPIX Capture', stage:'Extract', status: 'Error'},
+  {id: 4564976, time:'2019-05-24 13:00:05', description:'Refinitiv EMEA Evaluated Fixed Income', stage:'Transform', status: 'Resolved'},
+  {id: 4564975, time:'2019-05-24 13:00:18', description:'Goldman Sachs Futures Margining', stage:'Extract', status: 'Resolved'},
 ];
 
   gridApi!: GridApi;
   columnApi!: ColumnApi;
-  colDefs: ColDef[] = [{field:'time', headerName:'Time (UTC)', maxWidth: 150}, {field:'description'}, {field: 'type'}];
+  colDefs: ColDef[] = [{field: 'id', headerName: 'ID', maxWidth: 85}, 
+                       {field:'time', headerName:'Time (UTC)', maxWidth: 150}, 
+                       {field:'description'}, 
+                       {field: 'stage', maxWidth: 120},
+                       {field:'status', maxWidth: 200, cellClass: (ccp: CellClassParams) => ccp.value === 'Error' ? "text-red font-bold" : "text-green"}];
 
   doubleClickRow(event: RowDoubleClickedEvent ) {
-    let dataType: string = event.data.type;
+    let dataType: string = event.data.stage;
     Router.push(`/${dataType.toLowerCase()}?id=${event.data.id}`);
   }
 
@@ -80,12 +59,6 @@ export default class Index extends Component<{}, IndexState> {
         <AgGridReact columnDefs={this.colDefs} rowData={this.recentIssueData} gridOptions={this.gridOptions}
           onGridReady={this.onGridReady.bind(this)} ></AgGridReact>
       </div>
-      {/* <GridComponent title="Initial Data" rowData={this.state.initialData} />
-
-      {this.state.transformedWork.map((tw, index) =>
-        <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
-          onTransformerChanged={this.onTransformerChanged(index)}
-        />)} */}
 
     </Layout>
   }
