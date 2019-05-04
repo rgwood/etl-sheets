@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams, ColumnFactory } from 'ag-grid-community';
+import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams, ColumnFactory, ModelUpdatedEvent } from 'ag-grid-community';
 import { ColumnTransformer } from '../models/columnTransformer';
 import { RowData } from '../models/rowData';
 import uniq from 'lodash/uniq';
@@ -34,8 +34,17 @@ class GridComponent extends Component<GridProps> {
 
     // Update the column defs whenever props change. This is potentially really slow, can disable if we need speed for bigger transforms
     componentWillReceiveProps(newProps:any)  {
-        this.colDefs = this.getColDefs(newProps);
-        this.gridApi.sizeColumnsToFit();
+        let newColDefs = this.getColDefs(newProps)
+        let newColDefFieldNames = newColDefs.map(cd => cd.field!);
+        let currColDefFieldNames = this.colDefs.map(cd => cd.field!);
+        function arraysEqual(a1: string[],a2: string[]) {
+            return JSON.stringify(a1)==JSON.stringify(a2);
+        }
+
+        if(!arraysEqual(currColDefFieldNames, newColDefFieldNames)) {
+            this.colDefs = newColDefs;
+            this.gridApi.sizeColumnsToFit();
+        }
     }
 
     onRowExpressionChanged() {
@@ -51,6 +60,10 @@ class GridComponent extends Component<GridProps> {
         let transformer = this.props.transformer!;
         transformer.expression = newExpressionValue;
         this.props.onTransformerChanged!(transformer);
+    }
+
+    onModelUpdated(event: ModelUpdatedEvent) {
+        this.gridApi && this.gridApi.sizeColumnsToFit();
     }
 
     onColumnExpressionChanged(columnName: string) {
@@ -129,7 +142,7 @@ class GridComponent extends Component<GridProps> {
             </div>
             <div className="ag-theme-balham" >
                 <AgGridReact columnDefs={this.colDefs} rowData={this.props.rowData} gridOptions={this.gridOptions}
-                    onGridReady={this.onGridReady.bind(this)} />
+                    onGridReady={this.onGridReady.bind(this)} onModelUpdated={this.onModelUpdated.bind(this)} />
             </div>
         </div>
     }
