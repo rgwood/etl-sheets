@@ -13,5 +13,5 @@ test('return statements can be parsed if we do the simplest possible wrapping in
 test('fails when wrapping a nonsense expression', () => {
     let exp = `return row[2`;
     let wrapped = `function f() {${exp}}`
-    esprima.parseScript(wrapped);
+    expect(() => esprima.parseScript(wrapped)).toThrow();
 })
