@@ -8,7 +8,7 @@ import { RowData } from '../models/rowData';
 import { TableTransformer } from '../models/tableTransformer';
 import Link from 'next/link';
 import { NextContext } from 'next';
-import { withRouter } from 'next/router';
+import { withRouter, SingletonRouter } from 'next/router';
 
 export interface TransformState { initialData: RowData[], transformers: TableTransformer[], transformedWork: { transformer: TableTransformer, output: RowData[] }[] };
 
