@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 import { withRouter, SingletonRouter } from 'next/router';
 import { Component } from 'react';
 import { NextContext } from 'next';
-import AceEditor, { EditorProps, AceEditorProps } from 'react-ace';
+import AceEditor, { EditorProps, AceEditorProps, Marker } from 'react-ace';
 
 class Extract extends Component<{router: SingletonRouter}> {
   // constructor(props: any) {
@@ -17,6 +17,7 @@ class Extract extends Component<{router: SingletonRouter}> {
     let query = this.props.router.query;
     return      <Layout title={`Extract ${query.id}`}>
         <img className="pt-3" src="../static/pikachuconstruction.gif"></img>
+        <div>Error extracting...</div>
         <div className="my-2 p-1 border rounded-sm shadow">
         <AceEditor
                     mode="text"
@@ -30,12 +31,12 @@ class Extract extends Component<{router: SingletonRouter}> {
 Newline
 newline`}
                     markers={[{
-                      startRow: 2,
-                      startCol: 3,
-                      endRow: 2,
-                      endCol: 6,
-                      className: 'text-red',
-                      type: 'error'
+                      startRow: 1,
+                      startCol: 1,
+                      endRow: 1,
+                      endCol: 5,
+                      className: 'highlight-error',
+                      type: 'text'
                     }]}
                      annotations={[{row:1, column:2, type:'error', text:'test'}]}
                     setOptions={{
@@ -43,7 +44,7 @@ newline`}
                       readOnly: true,
                       highlightGutterLine: false,
                     showLineNumbers: true,
-                     firstLineNumber: 237,
+                      firstLineNumber: 237,
                     tabSize: 2,
                      maxLines: 100
                     }}/>

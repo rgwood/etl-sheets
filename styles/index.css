@@ -13,3 +13,8 @@ body {
 .ace_hidden-cursors {
   opacity:0
 } 
+
+.highlight-error {
+  position: absolute;
+  @apply bg-red-lighter;
+}
