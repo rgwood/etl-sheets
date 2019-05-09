@@ -12,7 +12,7 @@ function Clock() {
         return () => clearInterval(timerId);
     });
     return <span className="text-sm">
-        {`${moment(time).utc().format('YYYY-MM-DD HH:mm:ss')} (UTC)`}
+        {`Now: ${moment(time).utc().format('YYYY-MM-DD HH:mm:ss')} (UTC)`}
     </span>
 }
 
