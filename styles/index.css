@@ -18,3 +18,11 @@ body {
   position: absolute;
   @apply bg-red-lighter;
 }
+
+.header {
+  @apply pt-3 pb-1 text-alloy-teal-light text-xl font-bold;
+}
+
+.subheader {
+  @apply pb-2 text-alloy-teal-dark font-bold
+}
