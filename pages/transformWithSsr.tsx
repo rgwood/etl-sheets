@@ -12,7 +12,7 @@ import { withRouter, SingletonRouter } from 'next/router';
 
 export interface TransformState { initialData: RowData[], transformers: TableTransformer[], transformedWork: { transformer: TableTransformer, output: RowData[] }[] };
 
-class TransformWithSsr extends Component<{router: SingletonRouter}, TransformState> {
+class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformState> {
 
     constructor(props: any) {
         super(props);
@@ -22,9 +22,18 @@ class TransformWithSsr extends Component<{router: SingletonRouter}, TransformSta
         this.state = { initialData: initialData, transformers: transformers, transformedWork: transformedWork };
     }
 
-    static async getInitialProps({query}: NextContext) {
-        console.log({query});
+    static async getInitialProps({ query }: NextContext) {
+        console.log({ query });
     }
+
+    // addTransformerAtEnd() {
+    //     // let transformers = this.state.transformers;
+    //     console.log(this.state.transformers);
+    //     this.setState({ transformers: this.state.transformers.concat([new TableTransformer(' ')]), }, () => {
+    //         console.log(this.state.transformers);
+    //         this.rerunTransformations();
+    //     });
+    // }
 
     onTransformerChanged(index: number) {
         return (newValue: TableTransformer) => {
@@ -43,17 +52,24 @@ class TransformWithSsr extends Component<{router: SingletonRouter}, TransformSta
     }
 
     render() {
-        let query = this.props.router.query;
-        return <Layout title="2PM Bloomberg Import">
-        <div className="mt-2">ID: {query.id}</div>
+        let query = this.props.router.query!;
+        return <Layout title={`Transform Failure: ${query.id}`}>
 
-            <div className="mt-4 mb-2 text-lg text-alloy-teal-light font-serif">History</div>
+            <div className="mt-2">2PM Bloomberg Import</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <div>
+
+            </div>
+            </div>
+            <div className="header">History</div>
 
             <div>Started at <span className="font-bold">2019-04-30 04:29:18</span> following successful import <Link href='/fake'><a>14324234</a></Link></div>
-            <div className="mt-2 mb-4">Failed at <span className="font-bold">2019-04-30 04:29:55</span> (27s elapsed) in <Link href='/fake'><a>Transformation 2</a></Link> </div>
+            <div className="mt-2">Failed at <span className="font-bold">2019-04-30 04:29:55</span> (27s elapsed) in <Link href='/fake'><a>Transformation 2</a></Link> </div>
 
-            <div className="mt-4 mb-2 text-lg text-alloy-teal-light font-serif">Error Details</div>
-            blah blah blah... exception details, 
+            <div className="header">Error Details</div>
+            blah blah blah... exception details,
+
+            <div className="header">Transformation</div>
 
             <GridComponent title="Initial Data" rowData={this.state.initialData} />
 

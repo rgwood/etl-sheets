@@ -19,7 +19,7 @@ export interface GridProps {
     title: string;
     rowData: RowData[];
     transformer?: TableTransformer;
-    onTransformerChanged?: (newValue:TableTransformer) => void
+    onTransformerChanged?: (newValue:TableTransformer) => void;
 }
 
 class GridComponent extends Component<GridProps> {
@@ -124,14 +124,15 @@ class GridComponent extends Component<GridProps> {
         return <div>
             <div className="mt-2 mr-2 subheader">{this.props.title}
                  {this.hasExpression &&
-                 <div className="my-2 p-1 border rounded-sm shadow">
+                 <div className="my-2 p-1 border rounded-sm shadow" >
                  <AceEditor
                     mode="javascript"
                     theme="textmate"
                      onChange={this.onAceEditorChanged.bind(this)}
                     fontSize={12}
                     showPrintMargin={true}
-                    showGutter={false}
+                    //todo: how to style the gutter so it isn't grey?
+                    showGutter={true}
                     highlightActiveLine={false}
                     value={this.props.transformer ? this.props.transformer.expression: ''}
                     setOptions={{

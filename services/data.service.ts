@@ -6,11 +6,11 @@ import { RowTransformer } from '../models/rowTransformer';
 export function getInitialData(id: number): RowData[] {
     // todo: don't hardcode this, duh
     return [{
-        ticker: "AAPL", bid: 3400, ask: 3500
+        ticker: "AAPL Equity", bid: 3400, ask: 3500
     }, {
-        ticker: "GOOG", bid: 310, ask: 320
+        ticker: "GOOG Equity", bid: 310, ask: 320
     }, {
-        ticker: "MSFT", bid: 700, ask: 720
+        ticker: "MSFT Equity", bid: 700, ask: 720
     }];
 }
 
@@ -21,6 +21,6 @@ export function getTransformers(id: number): TableTransformer[] {
     
     let transformer1 = new TableTransformer('', [midFormula, spreadFormula]);
     //copy each row
-    let transformer2 = new TableTransformer('return [row, row];');
+    let transformer2 = new TableTransformer('filter($spread < 100)');
     return [transformer1, transformer2];
 }
