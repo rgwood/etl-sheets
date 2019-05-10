@@ -122,7 +122,7 @@ class GridComponent extends Component<GridProps> {
 
     render() {
         return <div>
-            <div className="my-2 mr-2 text-lg text-alloy-teal-light font-serif">{this.props.title}
+            <div className="mt-2 mr-2 subheader">{this.props.title}
                  {this.hasExpression &&
                  <div className="my-2 p-1 border rounded-sm shadow">
                  <AceEditor
