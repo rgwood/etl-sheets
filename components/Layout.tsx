@@ -9,7 +9,7 @@ export interface Props {
 }
 
 const Layout = (props: Props) => (
-    <div className="mx-auto max-w-xl p-4 md:p-12">
+    <div className="mx-auto max-w-2xl p-4 md:p-12">
         <Header />
         <div className="p-4 shadow rounded bg-white relative">
             <div className="absolute pin-r pin-t mt-6 mr-4 text-grey-dark font-mono">
