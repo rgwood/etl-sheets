@@ -43,12 +43,23 @@ export class RowTransformer {
         return afterRowTransform;
     }
 
+    // The worst part of this entire prototype. For production, need to think seriously about expression language+parsing
     private convertExpressionToJsFunctionString() {
+        let expression = this.expression;
+
+        //extremely hacky way to handle arbitrary filter expressions
+        if(this.expression.startsWith('filter(')) {
+            let filterExpression = this.expression.slice(7,this.expression.length - 1);
+            expression = `if(${filterExpression}) return row; else return undefined;`
+        }
 
         // This is the absolute craziest way of defining helper functions, but Function doesn't have access to local scope
-        var helpers = `function duplicate(row) {return [row,row];};`
+        var helpers = `function duplicate(row) {return [row,row];};
+        function lookupBloombergTicker(code) {return code + ' Equity';};`
+        // filter($ticker == 'AAPL Equity') -> 
+        // function filter(expression) {return undefined;};
 
-        return `${helpers}${this.expression.replace(/\$/g, 'row.')}; 
+        return `${helpers}${expression.replace(/\$/g, 'row.')}; 
         return row;`
     }
 
