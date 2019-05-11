@@ -11,7 +11,7 @@ import GridColumnHeader from './GridColumnHeader';
 import { TableTransformer } from '../models/tableTransformer';
 import classNames from 'classnames'
 import AceEditor, { EditorProps, AceEditorProps } from 'react-ace';
-import brace from 'brace';
+import brace, { Editor } from 'brace';
 import 'brace/mode/javascript';
 import 'brace/theme/textmate';
 
@@ -19,7 +19,7 @@ export interface GridProps {
     title: string;
     rowData: RowData[];
     transformer?: TableTransformer;
-    onTransformerChanged?: (newValue:TableTransformer) => void;
+    onTransformerChanged?: (newValue: TableTransformer) => void;
 }
 
 class GridComponent extends Component<GridProps> {
@@ -33,15 +33,15 @@ class GridComponent extends Component<GridProps> {
     }
 
     // Update the column defs whenever props change. This is potentially really slow, can disable if we need speed for bigger transforms
-    componentWillReceiveProps(newProps:any)  {
+    componentWillReceiveProps(newProps: any) {
         let newColDefs = this.getColDefs(newProps)
         let newColDefFieldNames = newColDefs.map(cd => cd.field!);
         let currColDefFieldNames = this.colDefs.map(cd => cd.field!);
-        function arraysEqual(a1: string[],a2: string[]) {
-            return JSON.stringify(a1)==JSON.stringify(a2);
+        function arraysEqual(a1: string[], a2: string[]) {
+            return JSON.stringify(a1) == JSON.stringify(a2);
         }
 
-        if(!arraysEqual(currColDefFieldNames, newColDefFieldNames)) {
+        if (!arraysEqual(currColDefFieldNames, newColDefFieldNames)) {
             this.colDefs = newColDefs;
             this.gridApi.sizeColumnsToFit();
         }
@@ -54,6 +54,13 @@ class GridComponent extends Component<GridProps> {
             transformer.expression = newExpression;
             this.props.onTransformerChanged!(transformer);
         }
+    }
+
+    // I think the type definitions for react-ace are screwy, it thinks this is an EditorProps instead of an Editor
+    onAceEditorLoad(editor: any) {
+        let typedEditor: Editor = editor;
+        // Stop ace from warning when no semicolon provided. Source: https://github.com/ajaxorg/ace/issues/1754
+        typedEditor.session.$worker.send("changeOptions", [{ asi: true, "-W051": false }]);
     }
 
     onAceEditorChanged(newExpressionValue: string) {
@@ -116,30 +123,30 @@ class GridComponent extends Component<GridProps> {
         this.columnApi = params.columnApi;
         this.gridApi.sizeColumnsToFit();
     }
-    
+
 
     gridOptions: GridOptions = { domLayout: 'autoHeight', headerHeight: this.props.transformer ? 64 : 32 };
 
     render() {
         return <div>
             <div className="mt-2 mr-2 subheader">{this.props.title}
-                 {this.hasExpression &&
-                 <div className="my-2 p-1 border rounded-sm shadow" >
-                 <AceEditor
-                    mode="javascript"
-                    theme="textmate"
-                     onChange={this.onAceEditorChanged.bind(this)}
-                    fontSize={12}
-                    showPrintMargin={true}
-                    //todo: how to style the gutter so it isn't grey?
-                    showGutter={true}
-                    highlightActiveLine={false}
-                    value={this.props.transformer ? this.props.transformer.expression: ''}
-                    setOptions={{
-                    showLineNumbers: false,
-                    tabSize: 2,
-                     maxLines: 100
-                    }}/></div>}
+                {this.hasExpression &&
+                    <div className="my-2 p-1 border rounded-sm shadow" >
+                        <AceEditor
+                            mode="javascript"
+                            theme="textmate"
+                            onLoad={this.onAceEditorLoad.bind(this)}
+                            onChange={this.onAceEditorChanged.bind(this)}
+                            fontSize={12}
+                            showPrintMargin={true}
+                            showGutter={true}
+                            highlightActiveLine={false}
+                            value={this.props.transformer ? this.props.transformer.expression : ''}
+                            setOptions={{
+                                showLineNumbers: false,
+                                tabSize: 2,
+                                maxLines: 100
+                            }} /></div>}
             </div>
             <div className="ag-theme-balham" >
                 <AgGridReact columnDefs={this.colDefs} rowData={this.props.rowData} gridOptions={this.gridOptions}

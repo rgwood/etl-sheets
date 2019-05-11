@@ -26,3 +26,7 @@ body {
 .subheader {
   @apply pb-2 text-alloy-teal-dark font-bold
 }
+
+div.ace_gutter_cell, #brace-editor > div.ace_gutter > div.ace_gutter-active-line {
+  @apply bg-white
+}
