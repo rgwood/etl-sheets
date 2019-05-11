@@ -20,7 +20,10 @@ export function getTransformers(id: number): TableTransformer[] {
     let spreadFormula = new ColumnTransformer('spread','$ask - $bid');
     
     let transformer1 = new TableTransformer('', [midFormula, spreadFormula]);
-    //copy each row
     let transformer2 = new TableTransformer('filter($spread < 100)');
-    return [transformer1, transformer2];
+
+    let removeColumns = `delete $bid;
+delete $ask;`
+    let transformer3 = new TableTransformer(removeColumns);
+    return [transformer1, transformer2, transformer3];
 }
