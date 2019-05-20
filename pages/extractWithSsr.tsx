@@ -9,12 +9,6 @@ import Link from 'next/link';
 
 
 class Extract extends Component<{ router: SingletonRouter }> {
-  // constructor(props: any) {
-  //   super(props);
-  // }
-  //   static async getInitialProps({query}: NextContext) {
-  //     console.log({query});
-  // }
 
   property = (name: string, value: JSX.Element | string) => <div className="my-1">
     <span className="text-grey-darker font-bold">{name}:</span> {value}
@@ -31,7 +25,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
           {this.property('Start time (UTC)', '2019-05-24 13:27:29')}
           {this.property('Failure time (UTC)', '2019-05-24 13:27:55 (duration: 26s)')}
         </div>
-        <div>
+        <div className="flex justify-end">
           {/* <div className="header">Top-Level Actions</div> */}
           <div className="pt-3">
           <button className="bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
@@ -40,7 +34,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
           </button>
           <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
           <i className="fas fa-check-circle pr-1"> </i>
-            Mark Success
+            Mark As Success
           </button>
           </div>
         </div>
@@ -55,11 +49,11 @@ class Extract extends Component<{ router: SingletonRouter }> {
           </button>
         <button className="ml-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-xs text-white font-bold py-1 px-2 rounded">
           <i className="fas fa-file-download pr-1"> </i>
-          Download CSV
+          Download Raw File
           </button>
         <button className="ml-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-xs text-white font-bold py-1 px-2 rounded">
         <i className="fas fa-file-upload pr-1"> </i>
-          Upload Fixed CSV
+          Upload Fixed File
           </button>
       </div>
       <div className="pl-5">
