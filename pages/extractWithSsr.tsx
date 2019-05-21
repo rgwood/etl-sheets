@@ -43,7 +43,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
       <div className="header">Extract Stages</div>
       <div className="subheader pt-3">► Download from FTP <span className="text-green italic">succeeded</span></div>
       {/* Downloaded file from ftp.bloomberg.com blah blah */}
-      <div className="subheader pt-1">▼ Extract CSV <span className="text-red italic">failed</span>
+      <div className="subheader pt-1">▼ Extract CSV <span className="text-red-dark italic">failed</span>
         <button className="fas fa-redo ml-4 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white  text-xs font-bold py-1 px-2 rounded">
           
           </button>

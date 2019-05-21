@@ -134,7 +134,7 @@ class GridComponent extends Component<GridProps> {
             <div className={classNames("mt-2 mr-2", this.props.transformer && this.props.transformer.failed ? "subheader-error" : "subheader")}>
             {`${this.props.title}${this.props.transformer && this.props.transformer.description ? `: ${this.props.transformer.description}` : ''}`}
                 {this.hasExpression &&
-                    <div className="my-2 p-1 border rounded-sm shadow" >
+                    <div className="mt-2 p-1 border rounded-sm shadow" >
                         <AceEditor
                             mode="javascript"
                             theme="textmate"

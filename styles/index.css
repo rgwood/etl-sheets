@@ -28,7 +28,7 @@ body {
 }
 
 .subheader-error {
-  @apply pb-2 text-red font-bold
+  @apply pb-2 text-red-dark font-bold
 }
 
 div.ace_gutter_cell, #brace-editor > div.ace_gutter > div.ace_gutter-active-line {
