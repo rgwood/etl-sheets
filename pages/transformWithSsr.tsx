@@ -59,7 +59,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
         let query = this.props.router.query!;
         return <Layout title={`Transform Failure: ${query.id}`} error={true}>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
                 <div>
                     <div className="mt-2">2PM Bloomberg Import</div>
                     <div className="header">History</div>
@@ -76,6 +76,11 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
                             <i className="fas fa-check-circle pr-1"> </i>
                             Mark As Success
           </button>
+          <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                            <i className="fas fa-save pr-1"> </i>
+                            Force Save
+          </button>
+          
                     </div>
                 </div>
             </div>
