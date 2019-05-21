@@ -19,7 +19,8 @@ export class ColumnTransformer {
     }
 
     private convertExpressionToJsFunctionString() {
-        return `return ${this.expression.replace(/\$/g, 'row.')}`
+        return `function lookupInternalId(code) { if(code == 'MSFT Equity') return undefined; else return code.substring(0,4);};
+        return ${this.expression.replace(/\$/g, 'row.')}`
     }
 
     //todo make this private
