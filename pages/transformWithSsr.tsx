@@ -44,6 +44,10 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
         };
     }
 
+    onInitialDataChanged() {
+        this.rerunTransformations();
+    }
+
     rerunTransformations() {
         let initialData = this.state.initialData;
         let transformers = this.state.transformers;
@@ -84,7 +88,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
 
             <div className="header">Transformation</div>
 
-            <GridComponent title="Initial Data" rowData={this.state.initialData} />
+            <GridComponent title="Initial Data" editable={true} rowData={this.state.initialData} onCellValueChanged={this.onInitialDataChanged.bind(this)} />
 
             {this.state.transformedWork.map((tw, index) =>
                 <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer}

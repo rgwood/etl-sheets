@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams, ColumnFactory, ModelUpdatedEvent } from 'ag-grid-community';
+import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams, ColumnFactory, ModelUpdatedEvent, CellValueChangedEvent } from 'ag-grid-community';
 import { ColumnTransformer } from '../models/columnTransformer';
 import { RowData } from '../models/rowData';
 import uniq from 'lodash/uniq';
@@ -21,6 +21,8 @@ export interface GridProps {
     rowData: RowData[];
     transformer?: TableTransformer;
     onTransformerChanged?: (newValue: TableTransformer) => void;
+    editable?: boolean;
+    onCellValueChanged?: () => void;
 }
 
 class GridComponent extends Component<GridProps> {
@@ -74,6 +76,10 @@ class GridComponent extends Component<GridProps> {
         this.gridApi && this.gridApi.sizeColumnsToFit();
     }
 
+    onCellValueChanged(event: CellValueChangedEvent) {
+        console.log('value changed');
+    }
+
     onColumnExpressionChanged(columnName: string) {
         return (newExpression: string) => {
             let transformer = this.props.transformer!;
@@ -111,7 +117,7 @@ class GridComponent extends Component<GridProps> {
                 }
             }
 
-            return { field: name, headerComponentFramework: GridColumnHeader, }
+            return { field: name, editable: this.props.editable, headerComponentFramework: GridColumnHeader, }
         };
 
         return colNames.map(cn => columnNameToColDef(cn));
@@ -153,7 +159,7 @@ class GridComponent extends Component<GridProps> {
             </div>
             <div className="ag-theme-balham" >
                 <AgGridReact columnDefs={this.colDefs} rowData={this.props.rowData} gridOptions={this.gridOptions}
-                    onGridReady={this.onGridReady.bind(this)} onModelUpdated={this.onModelUpdated.bind(this)} />
+                    onGridReady={this.onGridReady.bind(this)} onModelUpdated={this.onModelUpdated.bind(this)} onCellValueChanged={this.props.onCellValueChanged} />
             </div>
         </div>
     }
