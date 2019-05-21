@@ -14,6 +14,7 @@ import AceEditor, { EditorProps, AceEditorProps } from 'react-ace';
 import brace, { Editor } from 'brace';
 import 'brace/mode/javascript';
 import 'brace/theme/textmate';
+import { isUndefined } from 'util';
 
 export interface GridProps {
     title: string;
@@ -103,8 +104,9 @@ class GridComponent extends Component<GridProps> {
             let columnTransformer = columnTransformerFromName(name);
             if (columnTransformer) {
                 return {
-                    field: name, cellClass: (params: CellClassParams) => isNaN(params.value) ? 'text-red' : 'text-green-dark',
+                    field: name, cellClass: (params: CellClassParams) => isUndefined(params.value) ? 'bg-red-lighter' : 'text-green-dark',
                     headerComponentFramework: GridColumnHeader,
+                    minWidth:180,
                     headerComponentParams: { formulaExpression: columnTransformer.expression, onFormulaExpressionChanged: this.onColumnExpressionChanged(name) }
                 }
             }
@@ -129,7 +131,8 @@ class GridComponent extends Component<GridProps> {
 
     render() {
         return <div>
-            <div className="mt-2 mr-2 subheader">{this.props.title}
+            <div className={classNames("mt-2 mr-2", this.props.transformer && this.props.transformer.failed ? "subheader-error" : "subheader")}>
+            {`${this.props.title}${this.props.transformer && this.props.transformer.description ? `: ${this.props.transformer.description}` : ''}`}
                 {this.hasExpression &&
                     <div className="my-2 p-1 border rounded-sm shadow" >
                         <AceEditor
