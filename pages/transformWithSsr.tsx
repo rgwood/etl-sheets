@@ -64,7 +64,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
             <div className="header">History</div>
 
             <div>Started at <span className="font-bold">2019-04-30 04:29:18</span> following successful import <Link href='/fake'><a>14324234</a></Link></div>
-            <div className="mt-2">Failed at <span className="font-bold">2019-04-30 04:29:55</span> (27s elapsed) in <Link href='/fake'><a>Transformation 2</a></Link> </div>
+            <div className="mt-2">Failed at <span className="font-bold">2019-04-30 04:29:55</span> (27s elapsed) in <Link href='/fake'><a>Transformation 3: Lookup internal ID</a></Link> </div>
 
             <div className="header">Error Details</div>
             blah blah blah... exception details,

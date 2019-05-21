@@ -11,6 +11,8 @@ export function getInitialData(id: number): RowData[] {
         ticker: "GOOG Equity", bid: 310, ask: 320
     }, {
         ticker: "MSFT Equity", bid: 700, ask: 720
+    }, {
+        ticker: "CSCO Equity", bid: 227, ask: 229
     }];
 }
 
@@ -19,11 +21,14 @@ export function getTransformers(id: number): TableTransformer[] {
     let midFormula = new ColumnTransformer('mid','($bid + $ask) / 2');
     let spreadFormula = new ColumnTransformer('spread','$ask - $bid');
     
-    let transformer1 = new TableTransformer('', [midFormula, spreadFormula]);
-    let transformer2 = new TableTransformer('filter($spread < 100)');
-
-    let removeColumns = `delete $bid;
-delete $ask;`
-    let transformer3 = new TableTransformer(removeColumns);
-    return [transformer1, transformer2, transformer3];
+    let transformer1 = new TableTransformer('', [midFormula, spreadFormula],'Calculate mid+spread');
+    let transformer2 = new TableTransformer('filterOut($spread > 50)',[],'Remove spread outliers');
+    
+    let internalIdColTransformer = new ColumnTransformer('internalID','lookupInternalId($ticker)');
+    let transformer3 = new TableTransformer('',[internalIdColTransformer],'Lookup internal ID',true);
+    
+    let removeColumns = `delete $ticker; delete $bid; delete $ask`;
+    let transformer4 = new TableTransformer(removeColumns,[],'Remove unused columns');
+    
+    return [transformer1, transformer2, transformer3, transformer4];
 }

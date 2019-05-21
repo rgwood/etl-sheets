@@ -24,7 +24,7 @@ export class TableTransformer {
         this._expression = exp;
     }
 
-    constructor(expression: string, public columnFormulae: ColumnTransformer[] = []) {
+    constructor(expression: string, public columnFormulae: ColumnTransformer[] = [], public description?: string, public failed?: boolean) {
         this.expression = expression;
     }
 

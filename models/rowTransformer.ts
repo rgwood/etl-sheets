@@ -48,14 +48,14 @@ export class RowTransformer {
         let expression = this.expression;
 
         //extremely hacky way to handle arbitrary filter expressions
-        if(this.expression.startsWith('filter(')) {
-            let filterExpression = this.expression.slice(7,this.expression.length - 1);
-            expression = `if(${filterExpression}) return row; else return undefined;`
+        if(this.expression.startsWith('filterOut(')) {
+            let filterExpression = this.expression.slice(10,this.expression.length - 1);
+            expression = `if(${filterExpression}) return undefined; else return row;`
         }
 
         // This is the absolute craziest way of defining helper functions, but Function doesn't have access to local scope
         var helpers = `function duplicate(row) {return [row,row];};
-        function lookupBloombergTicker(code) {return code + ' Equity';};`
+        function lookupInternalId(code) {return code.substring(0,4);};`
         // filter($ticker == 'AAPL Equity') -> 
         // function filter(expression) {return undefined;};
 
