@@ -10,7 +10,7 @@ export function getInitialData(id: number): RowData[] {
     }, {
         ticker: "GOOG Equity", bid: 310, ask: 320
     }, {
-        ticker: "MSFT Equity", bid: 700, ask: 720
+        ticker: "MSFY Equity", bid: 700, ask: 720
     }, {
         ticker: "CSCO Equity", bid: 227, ask: 229
     }];

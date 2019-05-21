@@ -19,7 +19,7 @@ export class ColumnTransformer {
     }
 
     private convertExpressionToJsFunctionString() {
-        return `function lookupInternalId(code) { if(code == 'MSFT Equity') return undefined; else return code.substring(0,4);};
+        return `function lookupInternalId(code) { if(code == 'MSFY Equity') return undefined; else return code.substring(0,4);};
         return ${this.expression.replace(/\$/g, 'row.')}`
     }
 
