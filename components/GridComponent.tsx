@@ -23,11 +23,14 @@ export interface GridProps {
     onTransformerChanged?: (newValue: TableTransformer) => void;
     editable?: boolean;
     onCellValueChanged?: () => void;
+    highlightDirty?: boolean;
 }
 
 class GridComponent extends Component<GridProps> {
     colDefs: ColDef[] = [];
     hasExpression: boolean = false;
+    // Extremely dumb hack around the difficulties of identifying dirty rows in ag-grid
+    dirtyValue: string = 'MSFT Equity';
 
     constructor(props: GridProps) {
         super(props);
@@ -77,7 +80,11 @@ class GridComponent extends Component<GridProps> {
     }
 
     onCellValueChanged(event: CellValueChangedEvent) {
-        console.log('value changed');
+        console.log(event.value);
+        this.dirtyValue = event.value;
+        console.log(this.dirtyValue);
+        this.gridApi.refreshCells();
+        this.props.onCellValueChanged && this.props.onCellValueChanged();
     }
 
     onColumnExpressionChanged(columnName: string) {
@@ -110,14 +117,18 @@ class GridComponent extends Component<GridProps> {
             let columnTransformer = columnTransformerFromName(name);
             if (columnTransformer) {
                 return {
-                    field: name, cellClass: (params: CellClassParams) => isUndefined(params.value) ? 'bg-red-lighter' : 'text-green-dark',
+                    field: name, 
+                    cellClass: (params: CellClassParams) => isUndefined(params.value) ? 'bg-red-lighter' : 'text-green-dark',
                     headerComponentFramework: GridColumnHeader,
                     minWidth:180,
                     headerComponentParams: { formulaExpression: columnTransformer.expression, onFormulaExpressionChanged: this.onColumnExpressionChanged(name) }
                 }
             }
 
-            return { field: name, editable: this.props.editable, headerComponentFramework: GridColumnHeader, }
+            return { field: name, editable: this.props.editable, headerComponentFramework: GridColumnHeader, 
+                    cellClass: (params: CellClassParams) => 
+                    (params.value == this.dirtyValue && props.highlightDirty) ? 'bg-green-lighter' : ''
+            }
         };
 
         return colNames.map(cn => columnNameToColDef(cn));
@@ -159,7 +170,7 @@ class GridComponent extends Component<GridProps> {
             </div>
             <div className="ag-theme-balham" >
                 <AgGridReact columnDefs={this.colDefs} rowData={this.props.rowData} gridOptions={this.gridOptions}
-                    onGridReady={this.onGridReady.bind(this)} onModelUpdated={this.onModelUpdated.bind(this)} onCellValueChanged={this.props.onCellValueChanged} />
+                    onGridReady={this.onGridReady.bind(this)} onModelUpdated={this.onModelUpdated.bind(this)} onCellValueChanged={this.onCellValueChanged.bind(this)} />
             </div>
         </div>
     }

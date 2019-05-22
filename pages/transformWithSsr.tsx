@@ -58,42 +58,45 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
     render() {
         let query = this.props.router.query!;
         return <Layout title={`Transform Failure: ${query.id}`} error={true}>
-
             <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
                 <div>
                     <div className="mt-2">2PM Bloomberg Import</div>
                     <div className="header">History</div>
-
                 </div>
                 <div className="flex justify-end">
-                    {/* <div className="header">Top-Level Actions</div> */}
                     <div className="pt-3">
                         <button className="bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-redo pr-1"> </i>
                             Retry From Start
-          </button>
+                        </button>
                         <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-check-circle pr-1"> </i>
                             Mark As Success
-          </button>
-          <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                        </button>
+                        <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-save pr-1"> </i>
                             Force Save
-          </button>
-          
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div>Started at <span className="font-bold">2019-04-30 04:29:18</span> following successful import <Link href='/fake'><a>14324234</a></Link></div>
-            <div className="mt-2">Failed at <span className="font-bold">2019-04-30 04:29:55</span> (27s elapsed) in <Link href='/fake'><a>Transformation 3: Lookup internal ID</a></Link> </div>
+            <div>
+                Started at <span className="font-bold">2019-04-30 04:29:18</span> following successful import <Link href='/fake'><a>14324234</a></Link>
+            </div>
+            <div className="mt-2">
+                Failed at <span className="font-bold">2019-04-30 04:29:55</span>
+                (27s elapsed) in
+                <Link href='/fake'><a>Transformation 3: Lookup internal ID</a></Link>
+            </div>
 
             <div className="header">Error Details</div>
             LookupException: ticker 'MSFT Equity' not found.
 
             <div className="header">Transformation</div>
 
-            <GridComponent title="Initial Data" editable={true} rowData={this.state.initialData} onCellValueChanged={this.onInitialDataChanged.bind(this)} />
+            <GridComponent title="Initial Data" editable={true} rowData={this.state.initialData} 
+            onCellValueChanged={this.onInitialDataChanged.bind(this)} highlightDirty={true} />
 
             {this.state.transformedWork.map((tw, index) =>
                 <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
