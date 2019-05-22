@@ -94,13 +94,12 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
             LookupException: ticker 'MSFT Equity' not found.
 
             <div className="header">Transformation</div>
-
             <GridComponent title="Initial Data" editable={true} rowData={this.state.initialData} 
-            onCellValueChanged={this.onInitialDataChanged.bind(this)} highlightDirty={true} />
+            onCellValueChanged={this.onInitialDataChanged.bind(this)} inFailureMode={true} />
 
             {this.state.transformedWork.map((tw, index) =>
                 <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
-                    onTransformerChanged={this.onTransformerChanged(index)}
+                    onTransformerChanged={this.onTransformerChanged(index)} inFailureMode={true}
                 />)}
         </Layout>
     }

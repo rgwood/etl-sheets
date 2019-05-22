@@ -20,7 +20,7 @@ body {
 }
 
 .header {
-  @apply pt-3 pb-1 text-alloy-teal-dark text-xl font-bold;
+  @apply pt-3 mb-2 text-alloy-teal-dark text-xl font-bold;
 }
 
 .subheader {

@@ -23,7 +23,7 @@ export interface GridProps {
     onTransformerChanged?: (newValue: TableTransformer) => void;
     editable?: boolean;
     onCellValueChanged?: () => void;
-    highlightDirty?: boolean;
+    inFailureMode?: boolean;
 }
 
 class GridComponent extends Component<GridProps> {
@@ -127,7 +127,7 @@ class GridComponent extends Component<GridProps> {
 
             return { field: name, editable: this.props.editable, headerComponentFramework: GridColumnHeader, 
                     cellClass: (params: CellClassParams) => 
-                    (params.value == this.dirtyValue && props.highlightDirty) ? 'bg-green-lighter' : ''
+                    (params.value == this.dirtyValue && props.inFailureMode) ? 'bg-green-lighter' : ''
             }
         };
 

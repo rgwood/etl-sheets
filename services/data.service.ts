@@ -5,12 +5,24 @@ import { RowTransformer } from '../models/rowTransformer';
 
 export function getInitialData(id: number): RowData[] {
     // todo: don't hardcode this, duh
+    if(id == 1) {
+        return [{
+            ticker: "AAPL Equity", bid: 3400, ask: 3500
+        }, {
+            ticker: "GOOG Equity", bid: 310, ask: 320
+        }, {
+            ticker: "MSFY Equity", bid: 700, ask: 720
+        }, {
+            ticker: "CSCO Equity", bid: 227, ask: 229
+        }];
+    }
+
     return [{
         ticker: "AAPL Equity", bid: 3400, ask: 3500
     }, {
         ticker: "GOOG Equity", bid: 310, ask: 320
     }, {
-        ticker: "MSFY Equity", bid: 700, ask: 720
+        ticker: "MSFT Equity", bid: 700, ask: 720
     }, {
         ticker: "CSCO Equity", bid: 227, ask: 229
     }];
@@ -25,7 +37,7 @@ export function getTransformers(id: number): TableTransformer[] {
     let transformer2 = new TableTransformer('filterOut($spread > 50)',[],'Remove spread outliers');
     
     let internalIdColTransformer = new ColumnTransformer('internalID','lookupInternalId($ticker)');
-    let transformer3 = new TableTransformer('',[internalIdColTransformer],'Lookup internal ID',true);
+    let transformer3 = new TableTransformer('',[internalIdColTransformer],'Lookup internal ID',id == 1);
     
     let removeColumns = `delete $ticker; delete $bid; delete $ask`;
     let transformer4 = new TableTransformer(removeColumns,[],'Remove unused columns');
