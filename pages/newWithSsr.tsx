@@ -8,6 +8,8 @@ import { RowData } from '../models/rowData';
 import { TableTransformer } from '../models/tableTransformer';
 import { withRouter, SingletonRouter } from 'next/router';
 
+// This is weird how we store the transformers twice (in transformers and transformedWork.transformer)
+// TODO: eliminate this duplication
 export interface TransformState { initialData: RowData[], transformers: TableTransformer[], transformedWork: { transformer: TableTransformer, output: RowData[] }[] };
 
 class NewWithSsr extends Component<{ router: SingletonRouter }, TransformState> {
@@ -40,6 +42,17 @@ class NewWithSsr extends Component<{ router: SingletonRouter }, TransformState> 
         this.setState({ initialData: initialData, transformers: transformers, transformedWork: transformedWork });
     }
 
+    addTransformation() {
+        
+        let newTransformer = new TableTransformer(' ', [],'New');
+        let finalData = this.state.transformedWork[this.state.transformedWork.length - 1].output;
+        // this is kinda insane, should be able to just update the transformers
+        // TODO: can we render the GridComponents based on the transformers?
+        // Should we store a single copy of the transformers alongside the data?
+        let transformedWork = this.state.transformedWork.concat({transformer: newTransformer, output:finalData});
+        this.setState({ transformedWork: transformedWork });
+    }
+
     render() {
         return <Layout title={`New Transform`}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
@@ -49,6 +62,10 @@ class NewWithSsr extends Component<{ router: SingletonRouter }, TransformState> 
                 </div>
                 <div className="flex justify-end">
                     <div className="pt-3">
+                    <button onClick={this.addTransformation.bind(this)} className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                            <i className="fas fa-plus pr-1"> </i>
+                            Add Transformation
+                        </button>
                         <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-save pr-1"> </i>
                             Save
