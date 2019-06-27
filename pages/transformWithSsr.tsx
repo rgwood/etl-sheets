@@ -86,8 +86,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
             </div>
             <div className="mt-2">
                 Failed at <span className="font-bold">2019-04-30 04:29:55</span>
-                (27s elapsed) in
-                <Link href='/fake'><a>Transformation 3: Lookup internal ID</a></Link>
+                (27s elapsed) in <Link href='/fake'><a>Transformation 3: Lookup internal ID</a></Link>
             </div>
 
             <div className="header">Error Details</div>
