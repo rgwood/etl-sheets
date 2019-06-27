@@ -58,7 +58,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
       </div>
       <div className="pl-5">
         <div className="py-1">Attempted to extract CSV file <span className="italic">2019-03-12-21-05-00-0983495778.out</span>. </div>
-        <div className="py-1">Failure at line 238, column 38: <span className="font-bold">expected ',' before token</span></div>
+        <div className="py-1">Failure at line 238, column 35: <span className="font-bold">expected ',' before token</span></div>
         <div className="my-2 p-1 border rounded-sm shadow">
           <AceEditor
             mode="text"
@@ -68,12 +68,12 @@ class Extract extends Component<{ router: SingletonRouter }> {
             showGutter={true}
             highlightActiveLine={false}
             value={
-              `'AAPL Equity',123.45,123.67,'This is a well-formed note'
-'GOOG Equity',234.45,234.56,'This isn't a well-formed note'
-'MSFT Equity',345.45,345.56,'This is a well-formed note'`}
+              `"AAPL Equity",123.45,123.67,"A well-formed note"
+"GOOG Equity",234.45,234.56,"Not a "well-formed note"
+"MSFT Equity",345.45,345.56,"A well-formed note"`}
             markers={[{
               startRow: 1,
-              startCol: 38,
+              startCol: 35,
               endRow: 1,
               endCol: 400,
               className: 'highlight-error',
@@ -82,7 +82,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
             annotations={[{ row: 1, column: 2, type: 'error', text: 'test' }]}
             setOptions={{
               highlightActiveLine: false,
-              readOnly: true,
+              // readOnly: true,
               highlightGutterLine: false,
               showLineNumbers: true,
               firstLineNumber: 237,
