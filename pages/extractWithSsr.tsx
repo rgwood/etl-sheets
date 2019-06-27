@@ -58,7 +58,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
       </div>
       <div className="pl-5">
         <div className="py-1">Attempted to extract CSV file <span className="italic">2019-03-12-21-05-00-0983495778.out</span>. </div>
-        <div className="py-1">Failure at line 238, column 35: <span className="font-bold">expected ',' before token</span></div>
+        <div className="py-1">Failure at line 238, column 36: <span className="font-bold">expected ',' before token</span></div>
         <div className="my-2 p-1 border rounded-sm shadow">
           <AceEditor
             mode="text"
@@ -73,7 +73,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
 "MSFT Equity",345.45,345.56,"A well-formed note"`}
             markers={[{
               startRow: 1,
-              startCol: 35,
+              startCol: 36,
               endRow: 1,
               endCol: 400,
               className: 'highlight-error',

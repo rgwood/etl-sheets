@@ -91,7 +91,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
             </div>
 
             <div className="header">Error Details</div>
-            LookupException: ticker 'MSFT Equity' not found.
+            LookupException: ticker 'MSFY Equity' not found.
 
             <div className="header">Transformation</div>
             <GridComponent title="Initial Data" editable={true} rowData={this.state.initialData} 
