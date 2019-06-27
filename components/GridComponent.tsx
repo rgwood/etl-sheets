@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { Component } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams, ColumnFactory, ModelUpdatedEvent, CellValueChangedEvent } from 'ag-grid-community';
+import { Grid, ColDef, GridOptions, GridReadyEvent, GridApi, ColumnApi, CellClassParams, ColumnFactory, ModelUpdatedEvent, CellValueChangedEvent, ITooltipParams } from 'ag-grid-community';
 import { ColumnTransformer } from '../models/columnTransformer';
 import { RowData } from '../models/rowData';
 import uniq from 'lodash/uniq';
@@ -121,6 +121,7 @@ class GridComponent extends Component<GridProps> {
                     cellClass: (params: CellClassParams) => isUndefined(params.value) ? 'bg-red-lighter' : 'text-green-dark',
                     headerComponentFramework: GridColumnHeader,
                     minWidth:180,
+                    tooltip: (params: ITooltipParams) => isUndefined(params.value) ? "LookupException: ticker 'MSFY Equity' not found." : "",
                     headerComponentParams: { formulaExpression: columnTransformer.expression, onFormulaExpressionChanged: this.onColumnExpressionChanged(name) }
                 }
             }
@@ -144,7 +145,8 @@ class GridComponent extends Component<GridProps> {
     }
 
 
-    gridOptions: GridOptions = { domLayout: 'autoHeight', headerHeight: this.props.transformer ? 64 : 32 };
+    gridOptions: GridOptions = { domLayout: 'autoHeight', headerHeight: this.props.transformer ? 64 : 32, 
+    enableBrowserTooltips: true};
 
     render() {
         return <div>
