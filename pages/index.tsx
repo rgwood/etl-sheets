@@ -45,7 +45,7 @@ export default class Index extends Component<{}, IndexState> {
   render() {
     return <Layout title="ETL Dashboard">
       <div className="my-4">
-        Welcome. There are currently <span className="text-red">12</span> unresolved issues (<a className='text-blue' href='/transform'>1 new</a>).
+        Welcome. There are currently <span className="text-red">2</span> unresolved issues (<a className='text-blue' href='/transform'>1 new</a>).
       </div>
 
       <div className="mt-4 mb-2 text-lg text-alloy-teal-light font-serif">Search</div>
