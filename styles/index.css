@@ -1,7 +1,7 @@
 @tailwind preflight;
 @tailwind utilities;
 body {
-  @apply bg-grey-light;
+  @apply bg-grey-dark;
 }
 
 /* Fix the default cell header separator, because it looks ugly as hell for tall headers */
