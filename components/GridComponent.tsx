@@ -144,7 +144,6 @@ class GridComponent extends Component<GridProps> {
         this.gridApi.sizeColumnsToFit();
     }
 
-
     gridOptions: GridOptions = { domLayout: 'autoHeight', headerHeight: this.props.transformer ? 64 : 32, 
     enableBrowserTooltips: true};
 

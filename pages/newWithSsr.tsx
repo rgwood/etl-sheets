@@ -54,21 +54,34 @@ class NewWithSsr extends Component<{ router: SingletonRouter }, TransformState> 
     }
 
     render() {
-        return <Layout title={`New Transform`}>
+        return <Layout title={`New Transformation`}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
-                <div>
-                    <div className="mt-2">Name: 2PM Bloomberg Import</div>
-                    <div className="header">Transformation</div>
+                <div className="mt-2" style={{ display: "grid", justifyItems: "start", gridTemplateColumns: "auto 20rem ", gridTemplateRows: "auto auto" }}>
+                <div className="text-lg" style={{alignSelf: "center", gridColumnStart:1}}>Name: </div>
+                <div className="text-lg my-2" style={{alignSelf: "center", gridColumnStart:1, gridRowStart:2}}>Status:</div>
+                    
+                    <span style={{alignSelf: "center", justifySelf:"start", gridColumnStart:2, gridRowStart:1}}
+                    className="px-2 py-1 text-lg font-bold inline-block border ">
+                        2PM Bloomberg Import</span>
+
+                        <span style={{alignSelf: "center", justifySelf:"start", gridColumnStart:2, gridRowStart:2}}
+                    className="px-1 py-1 text-lg font-bold text-red-light inline-block ">
+                        Unsaved</span>
+                    
+{/* 
+                    <div className="text-lg my-2">Status: <span className="text-red-light px-2 py-1  border">Unsaved</span>
+                    
+                    </div> */}
                 </div>
                 <div className="flex justify-end">
                     <div className="pt-3">
                     <button onClick={this.addTransformation.bind(this)} className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-plus pr-1"> </i>
-                            Add Transformation
+                            Add Step
                         </button>
                         <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-save pr-1"> </i>
-                            Save
+                            Save Transformation
                         </button>
                     </div>
                 </div>
@@ -78,7 +91,7 @@ class NewWithSsr extends Component<{ router: SingletonRouter }, TransformState> 
             onCellValueChanged={this.onInitialDataChanged.bind(this)}/>
 
             {this.state.transformedWork.map((tw, index) =>
-                <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
+                <GridComponent key={index} title={`Step ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
                     onTransformerChanged={this.onTransformerChanged(index)}
                 />)}
         </Layout>

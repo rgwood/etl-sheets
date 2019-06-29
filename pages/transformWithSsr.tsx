@@ -86,7 +86,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
             </div>
             <div className="mt-2">
                 Failed at <span className="font-bold">2019-04-30 04:29:55</span>
-                (27s elapsed) in <Link href='/fake'><a>Transformation 3: Lookup internal ID</a></Link>
+                (27s elapsed) in <Link href='/fake'><a>Step 3: Lookup internal ID</a></Link>
             </div>
 
             <div className="header">Error Details</div>
@@ -97,7 +97,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
             onCellValueChanged={this.onInitialDataChanged.bind(this)} inFailureMode={true} />
 
             {this.state.transformedWork.map((tw, index) =>
-                <GridComponent key={index} title={`Transformation ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
+                <GridComponent key={index} title={`Step ${index + 1}`} rowData={tw.output} transformer={tw.transformer}
                     onTransformerChanged={this.onTransformerChanged(index)} inFailureMode={true}
                 />)}
         </Layout>
