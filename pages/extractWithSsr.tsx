@@ -43,7 +43,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
       <div className="header">Extract Stages</div>
       <div className="subheader pt-3">► Download from FTP <span className="text-green italic">succeeded</span></div>
       {/* Downloaded file from ftp.bloomberg.com blah blah */}
-      <div className="subheader pt-1">▼ Extract CSV <span className="text-red-dark italic">failed</span>
+      <div className="subheader pt-1">▼ Parse CSV <span className="text-red-dark italic">failed</span>
         <button className="fas fa-redo ml-4 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white  text-xs font-bold py-1 px-2 rounded">
           
           </button>
@@ -57,7 +57,7 @@ class Extract extends Component<{ router: SingletonRouter }> {
           </button>
       </div>
       <div className="pl-5">
-        <div className="py-1">Attempted to extract CSV file <span className="italic">2019-03-12-21-05-00-0983495778.out</span>. </div>
+        <div className="py-1">Attempted to parse CSV file <span className="italic">2019-03-12-21-05-00-0983495778.out</span>. </div>
         <div className="py-1">Failure at line 238, column 36: <span className="font-bold">expected ',' before token</span></div>
         <div className="my-2 p-1 border rounded-sm shadow">
           <AceEditor
