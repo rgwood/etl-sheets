@@ -1,1 +1,5 @@
-Experimenting with spreadsheets as a metaphor for better ETL processes.
+Experimenting with better tooling for ETL processes.
+
+# Extract Failure
+
+![Extract failure](docs/extractFailure.jpg)
