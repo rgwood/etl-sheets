@@ -75,11 +75,11 @@ class NewWithSsr extends Component<{ router: SingletonRouter }, TransformState> 
                 </div>
                 <div className="flex justify-end">
                     <div className="pt-3">
-                    <button onClick={this.addTransformation.bind(this)} className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                    <button onClick={this.addTransformation.bind(this)} className="mx-1 bg-custom-teal-light hover:bg-custom-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-plus pr-1"> </i>
                             Add Step
                         </button>
-                        <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                        <button className="mx-1 bg-custom-teal-light hover:bg-custom-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-save pr-1"> </i>
                             Save Transformation
                         </button>

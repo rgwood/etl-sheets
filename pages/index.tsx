@@ -48,12 +48,12 @@ export default class Index extends Component<{}, IndexState> {
         Welcome. There are currently <span className="text-red">2</span> unresolved issues (<a className='text-blue' href='/transform'>1 new</a>).
       </div>
 
-      <div className="mt-4 mb-2 text-lg text-alloy-teal-light font-serif">Search</div>
+      <div className="mt-4 mb-2 text-lg text-custom-teal-light font-serif">Search</div>
 
       <input className="shadow text-sm text-grey-darker appearance-none border rounded-sm w-1/2 p-1 leading-tight focus:outline-none focus:shadow-outline"  
             type="text" placeholder="Search all issues..." />
 
-      <div className="mt-4 mb-2 text-lg text-alloy-teal-light font-serif">Recent Issues</div>
+      <div className="mt-4 mb-2 text-lg text-custom-teal-light font-serif">Recent Issues</div>
 
       <div className="ag-theme-balham" >
         <AgGridReact columnDefs={this.colDefs} rowData={this.recentIssueData} gridOptions={this.gridOptions}

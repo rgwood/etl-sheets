@@ -65,15 +65,15 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
                 </div>
                 <div className="flex justify-end">
                     <div className="pt-3">
-                        <button className="bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                        <button className="bg-custom-teal-light hover:bg-custom-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-redo pr-1"> </i>
                             Retry From Start
                         </button>
-                        <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                        <button className="mx-1 bg-custom-teal-light hover:bg-custom-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-check-circle pr-1"> </i>
                             Mark As Success
                         </button>
-                        <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+                        <button className="mx-1 bg-custom-teal-light hover:bg-custom-teal-dark text-white font-bold py-2 px-4 rounded">
                             <i className="fas fa-save pr-1"> </i>
                             Force Save
                         </button>

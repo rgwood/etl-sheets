@@ -28,11 +28,11 @@ class Extract extends Component<{ router: SingletonRouter }> {
         <div className="flex justify-end">
           {/* <div className="header">Top-Level Actions</div> */}
           <div className="pt-3">
-          <button className="bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+          <button className="bg-custom-teal-light hover:bg-custom-teal-dark text-white font-bold py-2 px-4 rounded">
           <i className="fas fa-redo pr-1"> </i>
             Retry From Start
           </button>
-          <button className="mx-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white font-bold py-2 px-4 rounded">
+          <button className="mx-1 bg-custom-teal-light hover:bg-custom-teal-dark text-white font-bold py-2 px-4 rounded">
           <i className="fas fa-check-circle pr-1"> </i>
             Mark As Success
           </button>
@@ -44,14 +44,14 @@ class Extract extends Component<{ router: SingletonRouter }> {
       <div className="subheader pt-3">► Download from FTP <span className="text-green italic">succeeded</span></div>
       {/* Downloaded file from ftp.bloomberg.com blah blah */}
       <div className="subheader pt-1">▼ Parse CSV <span className="text-red-dark italic">failed</span>
-        <button className="fas fa-redo ml-4 bg-alloy-teal-light hover:bg-alloy-teal-dark text-white  text-xs font-bold py-1 px-2 rounded">
+        <button className="fas fa-redo ml-4 bg-custom-teal-light hover:bg-custom-teal-dark text-white  text-xs font-bold py-1 px-2 rounded">
           
           </button>
-        <button className="ml-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-xs text-white font-bold py-1 px-2 rounded">
+        <button className="ml-1 bg-custom-teal-light hover:bg-custom-teal-dark text-xs text-white font-bold py-1 px-2 rounded">
           <i className="fas fa-file-download pr-1"> </i>
           Download Raw File
           </button>
-        <button className="ml-1 bg-alloy-teal-light hover:bg-alloy-teal-dark text-xs text-white font-bold py-1 px-2 rounded">
+        <button className="ml-1 bg-custom-teal-light hover:bg-custom-teal-dark text-xs text-white font-bold py-1 px-2 rounded">
         <i className="fas fa-file-upload pr-1"> </i>
           Upload Fixed File
           </button>

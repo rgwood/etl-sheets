@@ -17,7 +17,7 @@ const HeaderElement: React.SFC<ActiveLinkProps> = (props) => {
     return <Link href={props.href}>
         <a className={classNames("relative p-2 font-sans shadow rounded text-lg no-underline",
             props.extraClasses ? props.extraClasses : '',
-            isActive ? "bg-alloy-teal-light text-white" : "bg-white text-alloy-teal-light",
+            isActive ? "bg-custom-teal-light text-white" : "bg-white text-custom-teal-light",
             !isActive && "hover:bg-yellow-lighter",
         )}>
         {props.text}

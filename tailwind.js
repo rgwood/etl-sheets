@@ -128,8 +128,8 @@ let colors = {
   'pink-lighter': '#ffbbca',
   'pink-lightest': '#ffebef',
 
-  'alloy-teal-dark': '#166069',
-  'alloy-teal-light': '#00bbaa'
+  'custom-teal-dark': '#166069',
+  'custom-teal-light': '#00bbaa'
 }
 
 module.exports = {

@@ -22,7 +22,7 @@ const Layout = (props: Props) => (
             </div>
             <div id="contentTitle" className="flex">
                 <span className={classNames("flex-2 font-sans font-bold text-3xl", 
-                props.error ? "text-red-dark" : "text-alloy-teal-dark")}>
+                props.error ? "text-red-dark" : "text-custom-teal-dark")}>
                     {props.title}
                 </span>
             </div>
