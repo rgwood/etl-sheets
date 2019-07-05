@@ -14,11 +14,11 @@ export interface IndexState { initialData: RowData[], transformers: TableTransfo
 export default class Index extends Component<{}, IndexState> {
 
   private recentIssueData = [{id: 4564980, time:'2019-05-24 14:12:48', description:'2PM Bloomberg Fixing Rates', stage:'Transform', status: 'Error'},
-  {id: 4564979, time:'2019-05-24 13:27:29', description:'Afternoon FTSE Sector Constituents', stage:'Transform', status: 'Resolved'},
-  {id: 4564978, time:'2019-05-24 13:11:36', description:'Afternoon FTSE Indexes', stage:'Transform', status: 'Resolved'},
-  {id: 4564977, time:'2019-05-24 13:00:18', description:'Tokyo Stock Exchange TOPIX Capture', stage:'Extract', status: 'Error'},
-  {id: 4564976, time:'2019-05-24 13:00:05', description:'Refinitiv EMEA Evaluated Fixed Income', stage:'Transform', status: 'Resolved'},
-  {id: 4564975, time:'2019-05-24 13:00:18', description:'Goldman Sachs Futures Margining', stage:'Extract', status: 'Resolved'},
+  {id: 4564979, time:'2019-05-24 13:27:29', description:'Bond Index Constituents', stage:'Transform', status: 'Resolved'},
+  {id: 4564978, time:'2019-05-24 13:11:36', description:'LSE Indexes', stage:'Transform', status: 'Resolved'},
+  {id: 4564977, time:'2019-05-24 13:00:18', description:'Tokyo Stock Exchange TOPIX Constituents', stage:'Extract', status: 'Error'},
+  {id: 4564976, time:'2019-05-24 13:00:05', description:'Refinitiv Asia Evaluated Fixed Income', stage:'Transform', status: 'Resolved'},
+  {id: 4564975, time:'2019-05-24 13:00:18', description:'Markit CDO Prices', stage:'Extract', status: 'Resolved'},
 ];
 
   gridApi!: GridApi;
