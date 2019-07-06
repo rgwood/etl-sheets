@@ -1,6 +1,6 @@
 I'm experimenting with better tooling for [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) systems. Can we make common data issues *quick* to resolve? Can automated data transformations be as easy to work with as spreadsheets? 
 
-I think the answer to both questions is yes, but don't take my word for it – you can try out the latest build at [etlsheets.netlify.com](http://etlsheets.netlify.com).
+I think the answer to both questions is yes, but don't take my word for it – you can try out the latest build at [etlsheets.netlify.com](http://etlsheets.netlify.com). You can open up failed extracts+transforms by clicking in the "Recent issues" table.
 
 ## Motivation
 
@@ -10,11 +10,20 @@ Speaking of transformations, how should we write them? Some systems take a code-
 
 ![Excel](docs/excel.jpg)
 
-
 ## Transformations
+
+[Here's what building a new transformation might look like](https://etlsheets.netlify.com/new/), and [here's what it might look like when that transformation fails to run successfully](https://etlsheets.netlify.com/transform/?id=4564980).
+
+![Transform](docs/transform.jpg)
+
+This works very much like a spreadsheet, albeit with visually distinct stages/steps. New columns can be created by entering a simple formula, and existing rows can be filtered+altered with simple row-level formulae. Significantly, formula changes are reflected immediately in the data – this might seem like a trivial feature, but I think it's a key part of usability. Bret Victor's made an entire career out of [his "creators need an immediate connection to what they're creating" principle](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/), and for good reason.
+
+Under the hood, formulae are written in JavaScript with some syntactic sugar (to make it easier to refer to columns) and macros (for common uses like filtering). I'm not tied to JS in particular, but using a "real" programming language gives us a lot more power and flexibility. Interoperating with existing libraries+code becomes trivial.
+
+Try opening up [the failed extraction](https://etlsheets.netlify.com/transform/?id=4564980). Our counterparty has sent us an identifier with a typo (MSFY instead of MSFT), but we can just fix the data inline.
 
 ## Extractions
 
-Data extractions that should be dead simple fail all the time. Counterparties provide bad data, network connectivity goes down, you name it. What if we had [tools that let you immediately pinpoint the error and then remedy the issue without diving into code](https://etlsheets.netlify.com/extract/?id=4564977)?
+Extractions are a bit less interesting than transformations, but we can go a long way with some relatively simple interfaces. We know that connectivity and formatting issues are common, so when they happen let's show users exactly where the problem is:
 
-![Extract failure](docs/extractFailure.jpg)
+[![Extract failure](docs/extractFailure.jpg)](https://etlsheets.netlify.com/extract/?id=4564977)
