@@ -1,6 +1,6 @@
 I'm experimenting with better tooling for [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) systems. Can we make common data issues *quick* to resolve? Can automated data transformations be as easy to work with as spreadsheets? 
 
-I think the answer to both questions is yes, but don't take my word for it – the latest build is available at [etlsheets.netlify.com](http://etlsheets.netlify.com). Try opening failed extracts+transforms by double-clicking in the "Recent issues" table.
+I think the answer to both questions is yes, and this prototype is usable at [etlsheets.netlify.com](http://etlsheets.netlify.com). Try opening failed extracts+transforms by double-clicking in the "Recent issues" table.
 
 ## Motivation
 
