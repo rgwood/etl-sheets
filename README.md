@@ -20,7 +20,7 @@ This works very much like a spreadsheet, albeit with visually distinct stages/st
 
 Under the hood, formulae are written in JavaScript with some syntactic sugar (to make it easier to refer to columns) and macros (for common uses like filtering). I'm not tied to JS in particular, but using a "real" programming language gives us a lot more power and flexibility. Interoperating with existing libraries+code becomes trivial.
 
-Try opening up [the failed extraction](https://etlsheets.netlify.com/transform/?id=4564980). Our counterparty has sent us an identifier with a typo (MSFY instead of MSFT), but we can just fix the data inline.
+Try opening up [the failed transformation](https://etlsheets.netlify.com/transform/?id=4564980). Our counterparty has sent us an identifier with a typo (MSFY instead of MSFT), but we can just fix the data inline.
 
 ## Extractions
 
