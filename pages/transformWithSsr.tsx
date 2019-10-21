@@ -57,7 +57,7 @@ class TransformWithSsr extends Component<{ router: SingletonRouter }, TransformS
 
     render() {
         let query = this.props.router.query!;
-        return <Layout title={`Transform Failure: ${query.id}`} error={true}>
+        return <Layout title={`Transform Failure: ${!!(query.id) ? query.id : '4564980' }`} error={true}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
                 <div>
                     <div className="mt-2">2PM Bloomberg Import</div>
